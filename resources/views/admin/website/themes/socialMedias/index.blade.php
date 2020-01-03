@@ -851,6 +851,10 @@ tbody tr td img{
             }
         });
 
+        $(document).on("click", '#txtMenuIcon', function (e) {
+            $('#iconModal').modal('toggle');
+        });
+        
         $(document).on("click", '.select-icon', function (e) {
             e.preventDefault();
             var selectedIcon = $(this).text();

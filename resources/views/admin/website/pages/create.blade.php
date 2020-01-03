@@ -82,7 +82,6 @@
                             <div class="col-md-3">
                                 <div class="row text-center">
                                     <button type="button" class="btn btn-default" onclick="alert('This is still under construction');">Preview</button>
-                                    <button type="button" class="btn btn-default" onclick="alert('This is still under construction');">Save as Draft</button>
                                     <button type="submit" class="btn btn-success">Publish</button>
                                 </div>
                                 <div class="row">
@@ -151,7 +150,6 @@
                         <div class="box-footer">
                             <a href="{{route('pages.index')}}" class="btn btn-danger">Cancel</a>
                             <input type="submit" class="btn btn-success pull-right" style="margin-left: 10px;" value="Publish">
-                            <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Save as Draft</button>
                             <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Preview</button>
                         </div>
                         <!-- /.box-footer -->

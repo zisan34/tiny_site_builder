@@ -30,14 +30,18 @@
                   <div class="col-md-12 p-0">
                       <div class="top_header_content">
                           <div class="brigade_logo">
+                            @if($LOGOS)
                               <img class="w-100" src="{{ asset($LOGOS->primary) }}" alt="">
+                            @endif
                           </div>
                           <div class="header_txt">
-                              <h1>{{$HEADER_FOOTERS->title}}</h1>
-                              <h2>{{$HEADER_FOOTERS->subtitle}}</h2>
+                              <h1>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : ''}}</h1>
+                              <h2>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->subtitle : ''}}</h2>
                           </div>
                           <div class="camp_logo">
+                            @if($LOGOS)
                               <img class="w-100" src="{{ asset($LOGOS->secondary) }}" alt="">
+                            @endif
                           </div>
                       </div>
                   </div>

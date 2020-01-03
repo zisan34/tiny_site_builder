@@ -47,44 +47,12 @@ tbody tr td img{
                     <!-- /.box-header -->
                     <div class="box-body">
                         @can('edit logos')
-                            @if($logo->primary)
-                            <form action="{{route('logos.update',$logo->id)}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                {{method_field('put')}}
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="primary_logo">Primary Logo :</label>
-                                        <input type="file" id="file_upload" name="primary_logo" />
-
-                                        <p class="help-block">
-                                            Supported formates: <strong>jpg, jpeg, png</strong><br />
-                                            Maximum Size: <strong>2MB</strong>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="secondary_logo">Secondary Logo :</label>
-                                        <input type="file" id="file_upload" name="secondary_logo" />
-
-                                        <p class="help-block">
-                                            Supported formates: <strong>jpg, jpeg, png</strong><br />
-                                            Maximum Size: <strong>2MB</strong>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="submit" class="button_cus_up btn btn-block btn-success pull-left" value="Update">
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            @else
-
                             <form action="{{route('logos.store')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label for="primary_logo">Primary Logo :</label>
+                                        <input type="hidden" id="logo_id" name="logo_id" value="{{$logo ? $logo->id : ''}}" />
                                         <input type="file" id="file_upload" name="primary_logo" />
 
                                         <p class="help-block">
@@ -109,7 +77,6 @@ tbody tr td img{
                                 </div>
                             </form>
 
-                            @endif
                         @endcan
                     </div>
 
@@ -124,9 +91,9 @@ tbody tr td img{
                             </thead>
                             <tbody>
                             @if(isset($logo))
-                                <tr>
-                                    <td><img src="{{URL(asset( $logo->primary ))}}"></td>
-                                    <td><img src="{{URL(asset( $logo->secondary ))}}"></td>
+                                <tr class="text-center">
+                                    <td>@if($logo->primary) <img src="{{URL(asset( $logo->primary ))}}"> @endif</td>
+                                    <td>@if($logo->secondary) <img src="{{URL(asset( $logo->secondary ))}}"> @endif</td>
                                     <td>{{ $logo->user->name }}</td>
                                 </tr>
                             @endif

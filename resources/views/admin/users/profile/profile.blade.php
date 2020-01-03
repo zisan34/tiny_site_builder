@@ -79,7 +79,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="gender">Gender:</label>
+                                <label for="gender">Gender:<small style="color:red">*</small></label>
                                 <input  tabindex="6" type="radio" name="gender" value="Male" @if($profile) @if($profile->gender=="Male") checked @endif @endif>Male
                                 <input tabindex="7" type="radio"  name="gender" value="Female" @if($profile) @if($profile->gender=="Female") checked @endif @endif>Female<br>
                             </div>
@@ -110,6 +110,13 @@
                                 <label for="exampleInputFile">Upload Profile Image</label>
                                 <input type="file" id="image" name="image" tabindex="12">
                             </div>
+                        </div>
+                        <div class="col-md-12 mt-10">
+                            <div class="form-group">
+                                <label for="bio">Your Bio:</label>
+                                <textarea name="bio" style="width: 100%; min-height: 100px;" placeholder="Write your bio here"></textarea>
+                            </div>
+
                         </div>
                         <div class="col-md-12 text-right mt-10">
                             <button type="submit" class="btn btn-success"> Update Profile </button>

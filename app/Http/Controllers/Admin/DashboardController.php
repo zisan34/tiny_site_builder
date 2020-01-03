@@ -83,10 +83,10 @@ class DashboardController extends Controller
         // }
         // exit();
 
-        // $role = Role::create(['name' => 'DQ']);
-        // $role = Role::where('name', 'Mess Manager')->latest()->first();
+        // $role = Role::create(['name' => 'Editor']);
+        // $role = Role::where('name', 'Admin')->latest()->first();
         // $role->givePermissionTo($permission);
-        // $permissions = Permission::where('name', 'like', '%draft%')->get();
+        // $permissions = Permission::all();
         // return $permissions;
         // $role->syncPermissions($permissions);
         // return $role->permissions;
@@ -95,6 +95,11 @@ class DashboardController extends Controller
 
 
         // if(Auth::user()->hasRole('Admin'))
+        // $user = Auth::user();
+
+        // $roles = Role::all();
+
+        // $user->syncRoles($roles);
 
 
         $users = User::where('id', '!=', Auth::id())->get();

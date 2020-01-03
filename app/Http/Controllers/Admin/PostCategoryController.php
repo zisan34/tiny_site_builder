@@ -18,7 +18,6 @@ class PostCategoryController extends Controller
      */
     public function index()
     {
-        //
         $categories = PostCategory::where('parent_id', NULL)->orderBy('order', 'asc')->get();
         return view('admin.website.posts.categories.index', compact('categories'));
     }

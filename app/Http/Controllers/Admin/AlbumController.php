@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Album;
+use App\AlbumImage;
 use Auth;
 class AlbumController extends Controller
 {
@@ -15,7 +16,7 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        //
+        //AlbumImage
         $albums = Album::all();
         return view('admin.website.albums.index', compact('albums'));
     }
@@ -165,5 +166,10 @@ class AlbumController extends Controller
     public function destroy($id)
     {
         //
+        $album = Album::find($id);
+        $album->deleted_by = Auth::id();
+        $album->save();
+        $album->delete();
+        return redirect()->route('albums.index');
     }
 }

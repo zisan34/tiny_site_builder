@@ -35,6 +35,7 @@
                 </div>
             </div>
             <!--welcome part start-->
+            @if($QUOTE)
             <section id="full_welcome">
                 <div class="container">
                     <div class="row">
@@ -51,6 +52,7 @@
                     </div>
                 </div>
             </section>
+            @endif
             <!--welcome part end-->
 
             <!--service part start-->

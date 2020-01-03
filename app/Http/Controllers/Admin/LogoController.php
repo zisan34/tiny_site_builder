@@ -43,11 +43,30 @@ class LogoController extends Controller
     {
         //
         $this->validate($request,[
-            'primary_logo' => 'required|mimes:jpg,jpeg,png|max:2500',
-            'secondary_logo' => 'required|mimes:jpg,jpeg,png|max:2500'
+            'primary_logo' => 'nullable|mimes:jpg,jpeg,png|max:2500',
+            'secondary_logo' => 'nullable|mimes:jpg,jpeg,png|max:2500'
         ]);
 
-        $logo = new Logo;
+        if(!$request->primary_logo)
+        {
+            $this->validate($request,[
+                'secondary_logo' => 'required|mimes:jpg,jpeg,png|max:2500',
+            ]);
+        }
+        else
+        {
+            $this->validate($request,[
+                'primary_logo' => 'required|mimes:jpg,jpeg,png|max:2500',
+            ]);
+        }
+        if($request->logo_id)
+        {
+            $logo = Logo::find($request->logo_id);
+        }
+        else
+        {
+            $logo = new Logo;
+        }
 
         if ($request->hasFile('primary_logo')) 
         {                

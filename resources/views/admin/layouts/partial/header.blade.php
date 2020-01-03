@@ -2,9 +2,9 @@
     <!-- Logo -->
     <a href="{{url('/')}}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>99</b>CB</span>
+        <span class="logo-mini">{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : ''}}</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>99</b> Composite Brigade</span>
+        <span class="logo-lg">{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : ''}}</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
