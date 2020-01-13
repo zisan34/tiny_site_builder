@@ -77,6 +77,24 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        //name
+        //email
+        //password
+        //password_confirmation
+        //dob
+        //gender
+        //gender
+        //facebook
+        //twitter
+        //country
+        //city
+        //address
+        //phone
+        //image
+        //instagram
+        //youtube
+        //bio
+
         $this->validate($request,[
             'email' => 'required|string|email|max:255',
             'name' => 'required|string|max:255',
@@ -103,44 +121,38 @@ class ProfileController extends Controller
         $user->updated_by = Auth::id();
         $user->save();
 
-        if(Auth::User()->profile) {
+        if(Auth::User()->profile)
+        {
             $profile = Auth::User()->profile;
-            $profile->city = $request->city;
-            $profile->country = $request->country;
-            $profile->address = $request->address;
-            $profile->phone = $request->phone;
-            $profile->gender = $request->gender;
-            $profile->dob = $dob;
-
-
-            if ($request->hasFile('image')) 
-            {
-                $image = $request->image;
-                $image_new = time() . '_' . Auth::id() . '_' . $image->getClientOriginalName();
-                $image->move('uploads/profile', $image_new);
-                $profile->image = '/uploads/profile/' . $image_new;
-            }
-            $profile->save();
-
         }
-        else{
+        else
+        {
             $profile = new Profile;
-
-            $profile->city    = $request->city;
-            $profile->country = $request->country;
             $profile->user_id = Auth::id();
-            $profile->address = $request->address;
-            $profile->phone   = $request->phone;
-            $profile->gender  = $request->gender;
-            $profile->dob     = $dob;
-
-            $image = $request->image;
-            $image_new_name = time().'_'.$request->user_id.'_'.$image->getClientOriginalName();
-            $profile->image = '/uploads/profile/'.$image_new_name;
-            $image->move('uploads/profile', $image_new_name);
-            $profile->save();
-
         }
+        $profile->city = $request->city;
+        $profile->country = $request->country;
+        $profile->address = $request->address;
+        $profile->phone = $request->phone;
+        $profile->gender = $request->gender;
+        $profile->bio = $request->bio;
+        $profile->facebook = $request->facebook;
+        $profile->twitter = $request->twitter;
+        $profile->instagram = $request->instagram;
+        $profile->youtube = $request->youtube;
+
+        $profile->dob = $dob;
+
+
+        if ($request->hasFile('image')) 
+        {
+            $image = $request->image;
+            $image_new = time() . '_' . Auth::id() . '_' . $image->getClientOriginalName();
+            $image->move('uploads/profile', $image_new);
+            $profile->image = '/uploads/profile/' . $image_new;
+        }
+        $profile->save();
+
         Toastr::success('Profile data updated successfully');
         return redirect()->route('profile');
 

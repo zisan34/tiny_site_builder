@@ -215,16 +215,14 @@
 
 
 
-                @if($user->hasPermissionTo('add social links') || $user->hasPermissionTo('edit social links') || $user->hasPermissionTo('delete social links') || $user->hasPermissionTo('view all social links') || $user->hasPermissionTo('edit logos') || $user->hasPermissionTo('edit header footers'))
-                <li class="treeview {{ (Request::is('admin/logos*') || 
-                                        Request::is('admin/headerfooters*') || 
-                                        Request::is('admin/social_medias*') )? 'active': '' }}">
-                    <a href="#"><i class="fa fa-circle-o"></i> Theme Options
-                        <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                    </a>
 
+                @if($user->hasPermissionTo('add widgets') || $user->hasPermissionTo('edit widgets') || $user->hasPermissionTo('delete widgets') || $user->hasPermissionTo('view all widgets') || $user->hasPermissionTo('add widget data') || $user->hasPermissionTo('edit widget data') || $user->hasPermissionTo('delete widget data') || $user->hasPermissionTo('view all widget data') || $user->hasPermissionTo('edit general site settings') || $user->hasPermissionTo('add menus') || $user->hasPermissionTo('edit menus') || $user->hasPermissionTo('delete menus') || $user->hasPermissionTo('view all menus')||$user->hasPermissionTo('add social links') || $user->hasPermissionTo('edit social links') || $user->hasPermissionTo('delete social links') || $user->hasPermissionTo('view all social links') || $user->hasPermissionTo('edit logos') || $user->hasPermissionTo('edit header footers'))
+                <li class="treeview {{ (Request::is('admin/general-settings*') || Request::is('admin/welcome-settings*') || Request::is('admin/widgets*')  || Request::is('admin/widget-data*') || Request::is('admin/menus*') || Request::is('admin/logos*') || 
+                                        Request::is('admin/headerfooters*') || 
+                                        Request::is('admin/social_medias*')  )? 'active': '' }}">
+                    <a href=""><i class="fa fa-circle-o"></i> Website Settings
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
                     <ul class="treeview-menu">
                         @can('edit logos')
                         <li class="{{ (\Request::route()->getName() == 'logos.index') ? 'active' : '' }}">
@@ -244,21 +242,13 @@
                             <a href="{{ route('social_medias.index') }}"><i class="fa fa-circle-o"></i> Social Media</a>
                         </li>
                         @endif
-                        {{-- @endcan --}}
-                    </ul>
-                </li>
-                @endif
 
-
-                @if($user->hasPermissionTo('add widgets') || $user->hasPermissionTo('edit widgets') || $user->hasPermissionTo('delete widgets') || $user->hasPermissionTo('view all widgets') || $user->hasPermissionTo('add widget data') || $user->hasPermissionTo('edit widget data') || $user->hasPermissionTo('delete widget data') || $user->hasPermissionTo('view all widget data') || $user->hasPermissionTo('edit general site settings') || $user->hasPermissionTo('add menus') || $user->hasPermissionTo('edit menus') || $user->hasPermissionTo('delete menus') || $user->hasPermissionTo('view all menus'))
-                <li class="treeview {{ (Request::is('admin/general-settings*') || Request::is('admin/widgets*')  || Request::is('admin/widget-data*') || Request::is('admin/menus*')  )? 'active': '' }}">
-                    <a href=""><i class="fa fa-circle-o"></i> Settings
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
                         @can('edit general site settings')
                         <li class="{{ (\Request::route()->getName() == 'general-settings.index') ? 'active' : '' }}">
                             <a href="{{ route('general-settings.index') }}"><i class="fa fa-circle-o"></i> General</a>
+                        </li>
+                        <li class="{{ (\Request::route()->getName() == 'welcome-settings.index') ? 'active' : '' }}">
+                            <a href="{{ route('welcome-settings.index') }}"><i class="fa fa-circle-o"></i> Welcome Page</a>
                         </li>
                         @endcan
 
@@ -311,7 +301,7 @@
         @endif
 
 
-        @if($user->hasPermissionTo('add users') || $user->hasPermissionTo('edit users') || $user->hasPermissionTo('delete users') || $user->hasPermissionTo('view all users') || $user->hasPermissionTo('give permissions to user'))
+        @if($user->hasRole('Super Admin'))
         <li class="treeview  {{ (Request::is('admin/settings*') ) ||  (Request::is('admin/users*') )||  (Request::is('admin/user-access*') )   ? 'active': ''  }} ">
             <a href="#">
                 <i class="fa  fa-gears "></i>

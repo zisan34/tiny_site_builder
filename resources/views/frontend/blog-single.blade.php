@@ -20,13 +20,14 @@
                 }
                 @endphp
                 <span class="mr-2">{{$readableDate}}</span> &bullet;
-                <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                <span class="ml-2"><span class="fa fa-comments"></span> 0</span>
             </div>
             <h1 class="mb-4">
               {{$page->title}} {{$page->subtitle ? '('.$page->subtitle.')':''}}
             </h1>
-            <a class="category mb-5" href="#">Food</a> <a class="category mb-5" href="#">Travel</a>
-           
+            @if($page->post_category)
+            <a class="category mb-5" href="#">{{$page->post_category->title}}</a>
+            @endif
             <div class="post-content-body">
               @if($page->content_type == 1)
 
@@ -48,12 +49,14 @@
             </div>
 
             
+            @if($page->post_category)
             <div class="pt-5">
-              <p>Categories:  <a href="#">Food</a>, <a href="#">Travel</a>  Tags: <a href="#">#manila</a>, <a href="#">#asia</a></p>
+              <p>Category:  <a href="#">{{$page->post_category->title}}</a></p>
             </div>
+            @endif
 
 
-            <div class="pt-5">
+            {{-- <div class="pt-5">
               <h3 class="mb-5">6 Comments</h3>
               <ul class="comment-list">
                 <li class="comment">
@@ -163,21 +166,20 @@
 
                 </form>
               </div>
-            </div>
+            </div> --}}
 
           </div>
 
           <!-- END main-content -->
 
           <div class="col-md-12 col-lg-4 sidebar">
-            @if($model == 'Post')
             <!-- END sidebar-box -->  
             <div class="sidebar-box mt-5">
               <div class="bio text-center">
                 <img src="{{URL::asset($page->user->profile->image)}}" alt="Image Placeholder" class="img-fluid">
                 <div class="bio-body">
                   <h2>{{$page->user->name}}</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.</p>
+                  <p class="info">{{$page->user->profile->bio}}</p>
                   {{-- <p><a href="#" class="btn btn-primary btn-sm rounded">Read my bio</a></p> --}}
                   <p class="social">
                     <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
@@ -188,6 +190,7 @@
                 </div>
               </div>
             </div>
+            @if($model == 'Post')
             @include('frontend.partial.postsidebar')
             @endif
             @include('frontend.partial.sidebar')
@@ -198,6 +201,10 @@
       </div>
     </section>
 
+    @php
+      $posts = App\Post::take(4)->get(); 
+    @endphp
+    @if(count($posts)>0)
     <section class="py-5">
       <div class="container">
         <div class="row">
@@ -206,44 +213,23 @@
           </div>
         </div>
         <div class="row">
+          @foreach($posts as $post)
           <div class="col-md-6 col-lg-4">
-            <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('{{URL::asset('frontend/images/img_2.jpg')}}'); ">
+            <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('{{URL::asset($post->featured_image)}}'); ">
               <div class="text">
                 <div class="post-meta">
-                  <span class="category">Lifestyle</span>
-                  <span class="mr-2">March 15, 2018 </span> &bullet;
-                  <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                  <span class="category">{{$post->post_category->title}}</span>
+                  <span class="mr-2">{{date('d-m-Y', strtotime($post->publish_datetime))}}</span> &bullet;
+                  <span class="ml-2"><span class="fa fa-comments"></span></span>
                 </div>
-                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+                <h3>{{$post->title}}</h3>
               </div>
             </a>
           </div>
-          <div class="col-md-6 col-lg-4">
-            <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('{{URL::asset('frontend/images/img_3.jpg')}}'); ">
-              <div class="text">
-                <div class="post-meta">
-                  <span class="category">Travel</span>
-                  <span class="mr-2">March 15, 2018 </span> &bullet;
-                  <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                </div>
-                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
-              </div>
-            </a>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('{{URL::asset('frontend/images/img_4.jpg')}}'); ">
-              <div class="text">
-                <div class="post-meta">
-                  <span class="category">Food</span>
-                  <span class="mr-2">March 15, 2018 </span> &bullet;
-                  <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                </div>
-                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
-              </div>
-            </a>
-          </div>
+          @endforeach
         </div>
       </div>
     </section>
+    @endif
     <!-- END section -->
 @endsection

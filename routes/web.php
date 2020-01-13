@@ -16,10 +16,12 @@
 */
 Route::get('/', 'HomeController@index');
 
-Route::get('page/{id}', 'HomeController@getPage')->name('page');
-Route::get('post/{id}', 'HomeController@getPost')->name('post');
-Route::get('post-category/{id}', 'HomeController@getPostCategory')->name('post.category');
-Route::get('gallery/{id}', 'HomeController@getGallery')->name('gallery');
+Route::post('/vistorlog', 'Admin\VisitorLogController@store');
+
+Route::get('page/{id}/{slug?}', 'HomeController@getPage')->name('page');
+Route::get('post/{id}/{slug?}', 'HomeController@getPost')->name('post');
+Route::get('post-category/{id}/{slug?}', 'HomeController@getPostCategory')->name('post.category');
+Route::get('gallery/{id}/{slug?}', 'HomeController@getGallery')->name('gallery');
 Route::get('photo-gallery', 'HomeController@photoGallery')->name('photo_gallery');
 Route::get('video-gallery', 'HomeController@videoGallery')->name('video_gallery');
 
@@ -28,113 +30,6 @@ Route::post('get_content', 'HomeController@getContent')->name('get_content');
 
 Route::post('get_gallery', 'HomeController@getGallery')->name('get_gallery');
 
-
-Route::get('/about/archive-gallery', function () {
-    return view('frontend.archive_gallery');
-});
-Route::get('/units/27-re', function () {
-    return view('frontend.blank')->with("page_title", "27 Riverine Engineering Battalion (RE)")->with("sidebar_dynamic", "_27");
-});
-Route::get('/units/28-ebr', function () {
-    return view('frontend.blank')->with("page_title", "28 East Bangle Regiments (EB)")->with("sidebar_dynamic", "_28");
-});
-Route::get('/units/19-bir', function () {
-    return view('frontend.blank')->with("page_title", "19 Bangladesh Infantry Regiment (BIR)")->with("sidebar_dynamic", "_19");
-});
-Route::get('/units/43-shorad', function () {
-    return view('frontend.blank')->with("page_title", "43 Short Range Air Defence (SHORAD)")->with("sidebar_dynamic", "_2");
-});
-Route::get('/units/ads', function () {
-    return view('frontend.blank')->with("page_title", "ADS")->with("sidebar_dynamic", "_3");
-});
-Route::get('/units/adhoc-ssd', function () {
-    return view('frontend.blank')->with("page_title", "Adhoc SSD")->with("sidebar_dynamic", "_3");
-});
-Route::get('/units/adhoc-workshop', function () {
-    return view('frontend.blank')->with("page_title", "Adhoc Workshop")->with("sidebar_dynamic", "_3");
-});
-Route::get('/units/garrison-engineers', function () {
-    return view('frontend.blank')->with("page_title", "Garrison Workshop (GW)")->with("sidebar_dynamic", "_3");
-});
-// War Heroes
-Route::get('/war-heroes/munshiganj', function () {
-    return view('frontend.war_heroes')->with("district", "Munshiganj");
-});
-Route::get('/war-heroes/faridpur', function () {
-    return view('frontend.war_heroes')->with("district", "Faridpur");
-});
-Route::get('/war-heroes/madaripur', function () {
-    return view('frontend.war_heroes')->with("district", "Madaripur");
-});
-// Padma Bridge
-Route::get('/padma-bridge/history', function () {
-    return view('frontend.blank')->with("page_title", "History");
-});
-Route::get('/padma-bridge/project-cost', function () {
-    return view('frontend.blank')->with("page_title", "Project Cost");
-});
-Route::get('/padma-bridge/contract-details', function () {
-    return view('frontend.blank')->with("page_title", "Contract Details");
-});
-Route::get('/padma-bridge/resettlement-details', function () {
-    return view('frontend.blank')->with("page_title", "Resettlement Details");
-});
-Route::get('/padma-bridge/environment-details', function () {
-    return view('frontend.blank')->with("page_title", "Environment Details");
-});
-Route::get('/padma-bridge/land-acquisition-details', function () {
-    return view('frontend.blank')->with("page_title", "Land Acquisition Details");
-});
-Route::get('/padma-bridge/project-cost-summary', function () {
-    return view('frontend.blank')->with("page_title", "Project Cost Summary");
-});
-Route::get('/padma-bridge/main-bridge-details', function () {
-    return view('frontend.blank')->with("page_title", "Main Bridge Details (Technical)");
-});
-Route::get('/padma-bridge/river-training-work', function () {
-    return view('frontend.blank')->with("page_title", "River Training Work (Technical)");
-});
-Route::get('/padma-bridge/approach-road-and-service-areas-details', function () {
-    return view('frontend.blank')->with("page_title", "Approach Road and Service Areas Details");
-});
-
-// National Building
-Route::get('/national-building/development-work', function () {
-    return view('frontend.blank')->with("page_title", "Development Work");
-});
-Route::get('/national-building/construction-work', function () {
-    return view('frontend.blank')->with("page_title", "Construction Work");
-});
-Route::get('/national-building/civil-administration', function () {
-    return view('frontend.blank')->with("page_title", "In Aid to Civil Administration");
-});
-// Media
-Route::get('/media/spotlight', function () {
-    return view('frontend.blank')->with("page_title", "Spotlight");
-});
-Route::get('/media/publications', function () {
-    return view('frontend.blank')->with("page_title", "Publications");
-});
-Route::get('/media/photo-gallery', function () {
-    return view('frontend.blank')->with("page_title", "Photo Gallery");
-});
-Route::get('/media/video-gallery', function () {
-    return view('frontend.blank')->with("page_title", "Video Gallery");
-});
-
-// Branch Activities
-Route::get('/branch-activities/general-staff-branch', function () {
-    return view('frontend.blank')->with("page_title", "General Staff Branch (GS)");
-});
-Route::get('/branch-activities/admin-quartering-branch', function () {
-    return view('frontend.blank')->with("page_title", "Admin & Quartering Branch");
-});
-Route::get('/branch-activities/establishment-branch', function () {
-    return view('frontend.blank')->with("page_title", "Establishment Branch");
-});
-Route::get('/branch-activities/ord-branch', function () {
-    return view('frontend.blank')->with("page_title", "Ord Branch");
-});
 
 
 Route::get('/admin/', function(){
@@ -159,39 +54,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
 
     Route::post('/drafts/review','DraftController@review')->name('drafts.review');
 
-    Route::get('/notes/outgoing', 'NoteController@outGoing')->name('notes.outgoing');
-    
     Route::get('/dashboard/getTodos', 'TodoController@getTodos')->name('dashboard.getTodos');
 
-
-    Route::get('/mess/foodmenu/get', 'FoodMenuController@get_filtered')->name('foodmenu.get_filtered');
-    Route::post('/mess/foodmenu/get', 'MealController@get_food_menu')->name('food_menu.get');
-
-    Route::get('/meals/entry/{user_id}', 'MealController@entry')->name('meals.entry');
-    Route::post('/meals/insert','MealController@insert')->name('meals.insert');
-
-    Route::get('/mess/food/meal-calendar', 'MealController@meal_calendar')->name('mess.meal_calendar');
-    Route::get('/mess/food/user-meal-calendar', 'MealController@user_meal_calendar')->name('mess.user_meal_calendar');
-
-    Route::post('/meals/make-payment', 'MealController@make_payment')->name('meals.make_payment');
-
-    Route::post('/user-transaction/make-payment', 'UserTransactionController@make_payment')->name('user-transaction.make_payment');
-
-    Route::get('/user-transaction/confirm-payment/{tr_id}', 'UserTransactionController@confirm_payment')->name('user-transaction.confirm_payment');
-
-    Route::post('/meals/view_data','MealController@viewData')->name('meals.view');
-
-
-    Route::post('/user-transaction/view_data','UserTransactionController@viewData')->name('user-transaction.view');
-
-    Route::get('/report/meals/meal-budget','MealController@meal_budget')->name('meals.meal_budget');
-    Route::get('/report/meals/meal-budget-print','MealController@meal_budget_print')->name('meals.meal_budget_print');
-
-    Route::get('/report/meals/user-meal-report','MealController@user_meal_report')->name('meals.user_meal_report');
-    Route::post('/report/meals/user-meal-report-print','MealController@user_meal_report_print')->name('meals.user_meal_report_print');
-
-    Route::get('/report/meals/meal-report','MealController@meal_report')->name('meals.meal_report');
-    Route::get('/report/meals/meal-report-print','MealController@meal_report_print')->name('meals.meal_report_print');
 
     Route::get('/user-access/permissions/{id}','UserAccessController@user_permissions')->name('user_permissions');
     
@@ -201,11 +65,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
     Route::resources([
         'drafts' => 'DraftController',
         'events' => 'EventController',
-        'food-menu' => 'FoodMenuController',
-        'meals' => 'MealController',
-        'food-category' => 'FoodCategoryController',
-        'user-transaction' => 'UserTransactionController',
-        'notes' => 'NoteController',
         'todos' => 'TodoController',
         'draft_type' => 'DraftTypeController',
         'posts' => 'PostController',
@@ -218,13 +77,13 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
         'logos' => 'LogoController',
         'widgets' => 'WidgetController',
         'widget-data' => 'WidgetDataController',
+        'welcome-settings' => 'WelcomePageSettingController',
         'general-settings' => 'GeneralSettingController',
         'menus' => 'MenuController',
         'members' => 'MemberController',
         'albums' => 'AlbumController',
         'videos' => 'VideoController',
         'album-images' => 'AlbumImageController',
-        'member-categories' => 'MemberCategoryController',
         'users' => 'UserController',
         'user-access' => 'UserAccessController',
 
@@ -236,8 +95,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
     Route::get('/dashboard/getQuote', 'DashboardController@getQuote')->name('dashboard.getQuote');
 
 
-
-    Route::post('/food-menu/toggle', 'FoodMenuController@toggleStatus')->name('food-menu.toggle');
 
     Route::post('/posts/toogle', 'PostController@toogleStatus')->name('posts.toogle');
     
@@ -305,14 +162,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
     Route::post('/categories/view_data','PostCategoryController@viewData');
 
 
-    // prescription
-    Route::get('/prescription/mdcn_corner',function(){
-        return view('admin.prescription.mdcn_corner');
-    })->name('prescription.mdcn_corner');
-
-    Route::get('/prescription/prescription',function(){
-        return view('admin.prescription.prescription');
-    })->name('prescription.prescription');
 
 
 

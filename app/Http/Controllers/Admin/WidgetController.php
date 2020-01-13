@@ -51,7 +51,7 @@ class WidgetController extends Controller
         $widget = new Widget;
         $widget->title = $request->title;
         $widget->parent_page_id = ($request->parent_page) ? implode(",",$request->parent_page) : '-1';
-        $widget->type = $request->type;
+        $widget->type = $request->type != 2 ? 3 : 2;
         $widget->popup = $request->popup == 'on' ? '1':'0';
         $widget->short_desc = $request->short_desc == 'on' ? '1':'0';
         $widget->order = $request->order;

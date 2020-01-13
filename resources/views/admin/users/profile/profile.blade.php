@@ -83,6 +83,17 @@
                                 <input  tabindex="6" type="radio" name="gender" value="Male" @if($profile) @if($profile->gender=="Male") checked @endif @endif>Male
                                 <input tabindex="7" type="radio"  name="gender" value="Female" @if($profile) @if($profile->gender=="Female") checked @endif @endif>Female<br>
                             </div>
+                            
+
+                            <div class="form-group">
+                                <label for="attribute_type">Facebook:</label>
+                                <input type="text" class="form-control" id="Facebook" name="facebook" title="Facebook Link" placeholder="Facebook Link" autocomplete="Facebook"  value="{{ old('facebook', $profile->facebook) }}" tabindex="11">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="attribute_type">Twitter:</label>
+                                <input type="text" class="form-control" id="Twitter" name="twitter" title="Twitter Link" placeholder="Twitter Link" autocomplete="Twitter"  value="{{ old('twitter', $profile->twitter) }}" tabindex="11">
+                            </div>
                         </div>
                         <div class="col-md-6">
 
@@ -94,27 +105,37 @@
                             
                             <div class="form-group">
                                 <label for="shipping_location">City: </label>
-                                <input class="form-control" type="text" id="city" name="city"tabindex="9" style="width: 100%;" autocomplete="city" value="{{ old('country', $profile->city) }}">
+                                <input class="form-control" type="text" id="city" name="city"tabindex="9" style="width: 100%;" autocomplete="city" value="{{ old('city', $profile->city) }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="attribute_type">Address</label>
-                                <input type="text" class="form-control" id="address" name="address" title="Address" autocomplete="address"  value="{{ old('country', $profile->address) }}" placeholder="Address"  tabindex="10">
+                                <input type="text" class="form-control" id="address" name="address" title="Address" autocomplete="address"  value="{{ old('address', $profile->address) }}" placeholder="Address"  tabindex="10">
                             </div>
 
                             <div class="form-group">
                                 <label for="attribute_type">Phone:</label>
-                                <input type="text" class="form-control" id="phone" name="phone" title="Phone" placeholder="Phone" autocomplete="phone"  value="{{ old('country', $profile->phone) }}" tabindex="11">
+                                <input type="text" class="form-control" id="phone" name="phone" title="Phone" placeholder="Phone" autocomplete="phone"  value="{{ old('phone', $profile->phone) }}" tabindex="11">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Upload Profile Image</label>
                                 <input type="file" id="image" name="image" tabindex="12">
                             </div>
+
+                            <div class="form-group">
+                                <label for="attribute_type">Instagram:</label>
+                                <input type="text" class="form-control" id="instagram" name="instagram" title="Instagram Link" placeholder="instagram" autocomplete="instagram"  value="{{ old('instagram', $profile->instagram) }}" tabindex="11">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="attribute_type">Youtube:</label>
+                                <input type="text" class="form-control" id="youtube" name="youtube" title="Youtube" placeholder="Youtube" autocomplete="youtube"  value="{{ old('youtube', $profile->youtube) }}" tabindex="11">
+                            </div>
                         </div>
                         <div class="col-md-12 mt-10">
                             <div class="form-group">
                                 <label for="bio">Your Bio:</label>
-                                <textarea name="bio" style="width: 100%; min-height: 100px;" placeholder="Write your bio here"></textarea>
+                                <textarea name="bio" style="width: 100%; min-height: 100px;" placeholder="Write your bio here">{{ old('bio', $profile->bio) }}</textarea>
                             </div>
 
                         </div>

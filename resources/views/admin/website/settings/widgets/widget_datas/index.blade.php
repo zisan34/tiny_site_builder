@@ -16,7 +16,7 @@
         margin-top: 20px;
     }
     .sidebar .side_header {
-    background-color: #1a5010;
+    background-color: #966CD8;
     padding: 10px 0;
     }
     .sidebar .side_header h5 {
@@ -252,15 +252,6 @@
                                 <label for="link"> Detailed Info:<small style="color:red">*</small> </label>
                                 <textarea id="info_data_txt" name="info_data" class="form-control summernote"></textarea>
                             </div>
-                            <div id="member_div" class="form-group col-md-12" style="display: none;">
-                                <label for="member_ddl"> Select Member :<small style="color:red">*</small> </label>
-                                <select name="member" id="member_ddl" class="form-control select2" style="width: 100%;">
-                                    <option value="" selected>--Select Member--</option>
-                                    @foreach($members as $member)
-                                    <option value="{{$member->id}}"> {{$member->name}}-{{$member->designation}}({{$member->member_category->title}} {{$member->member_subcategory ? ','.$member->member_subcategory->title : ''}}) </option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <div id="post" class="form-group col-md-8" style="display: none;">
                                 <label for="post_ddl"> Select Post :<small style="color:red">*</small> </label>
                                 <select name="post" id="post_ddl" class="form-control select2" style="width: 100%;">
@@ -312,7 +303,9 @@
 
 @push('js_custom')
 <script>
+
     $(function () {
+
 
         $('.summernote').summernote({
             tabsize: 2,
@@ -466,7 +459,7 @@
 
         var getWelcomeContnetWords = $('#info').text().split(" ");
         var message = "";
-        var max_length = getWelcomeContnetWords.length() > 120 ? 120 :getWelcomeContnetWords.length();
+        var max_length = getWelcomeContnetWords.length > 120 ? 120 :getWelcomeContnetWords.length;
         for (i = 0; i < max_length; i++) 
         {
           message += getWelcomeContnetWords[i] + " ";

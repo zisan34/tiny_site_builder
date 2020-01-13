@@ -30,12 +30,10 @@
                   <div class="col-md-12 p-0">
                       <div class="top_header_content">
                           <div class="brigade_logo">
-                            @if($LOGOS)
-                              <img class="w-100" src="{{ asset($LOGOS->primary) }}" alt="">
-                            @endif
+                              <img class="w-100" src="{{ asset($LOGOS ? $LOGOS->primary : 'frontend/images/LogoMakr_7FwHZF.png' ) }}" alt="">
                           </div>
                           <div class="header_txt">
-                              <h1>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : ''}}</h1>
+                              <h1>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : env('APP_NAME')}}</h1>
                               <h2>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->subtitle : ''}}</h2>
                           </div>
                           <div class="camp_logo">

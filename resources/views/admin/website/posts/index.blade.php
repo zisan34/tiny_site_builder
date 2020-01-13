@@ -18,8 +18,8 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Draft Management</a></li>
-            <li class="active">Draft List</li>
+            <li><a href="#">Post Management</a></li>
+            <li class="active">Post List</li>
         </ol>
     </section>
 
@@ -47,24 +47,24 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>SL#</th>
+                                <th style="width: 30px;">SL#</th>
                                 <th class="text-left">Title</th>
                                 <th>Creator</th>
                                 <th>Category</th>
                                 <th>Sub Category</th>
-                                <th style="min-width: 100px;">Action</th>
+                                <th style="width: 120px;">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($posts as $key => $post)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
+                                <td class="text-center">{{ $key + 1 }}</td>
                                 <td><a href="{{ route('posts.edit', $post) }}">
                                     {{ $post->title }}
                                 </a></td>
-                                <td>{{ $post->user->name }}</td>
-                                <td>{{ $post->post_category->title }}</td>
-                                <td>
+                                <td class="text-center">{{ $post->user->name }}</td>
+                                <td class="text-center">{{ $post->post_category->title }}</td>
+                                <td class="text-center">
                                     @if($post->post_sub_category) 
                                         {{ $post->post_sub_category->title }} 
                                     @endif

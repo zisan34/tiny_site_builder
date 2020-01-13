@@ -2,6 +2,9 @@
 <html>
 
 <head>
+    <!-- Developed By : Fazlul Kabir(fazlulkabir34@gmail.com) -->
+    <!-- In guidence of : Abdur Rob -->
+    <!-- In collaboration with : Imran Ahmed, Saimun Hossain -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title> @yield('page_title') {{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : env('APP_NAME')}}</title>
@@ -11,7 +14,7 @@
 
     @yield('meta')
     <!-- Favicon -->
-    <link rel="icon" href="{{ URL::asset('frontend/images/favicon-16x16.png') }}" type="image/icon type">
+    <link rel="icon" href="{{ URL::asset($LOGOS ? $LOGOS->primary : 'frontend/images/LogoMakr_41Vlo9.png' ) }}" type="image/icon type">
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -59,16 +62,20 @@
     {{-- jquery validator --}}
     <link rel="stylesheet" href="{{ asset('backend/plugins/validate/validate.css') }}">
 
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="{{URL::asset('backend/plugins/timepicker/bootstrap-timepicker.min.css')}}">
+    
 
     <style type="text/css">
         th {
             text-align: center;
         }
+        body { overflow-y: scroll; }
     </style>
     @stack('css_custom')
 </head>
 
-<body class="hold-transition skin-green sidebar-mini">
+<body class=" fixed hold-transition skin-purple sidebar-mini">
     <div class="wrapper">
 
         @include('admin.layouts.partial.header')
@@ -146,13 +153,39 @@
     {{-- jquery validator --}}
     <script src="{{ asset('backend/plugins/validate/jquery.validate.min.js') }}"></script>
 
-    <script src="{{ asset('backend/plugins/validate/messages.validate.js') }}"></script>    
+    <script src="{{ asset('backend/plugins/validate/messages.validate.js') }}"></script>
+
+    <!-- bootstrap time picker -->
+    <script src="{{URL::asset('backend/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 
 @stack('js_lib')
 
     {!! Toastr::message() !!}
 @stack('js_custom')
 
+
+<script>
+    
+    let SITE_URL = "{{url('')}}";
+
+    function setImgUrl(){
+        let images = $('img');
+
+        $.each(images, function(index, image){
+            src = image.getAttribute('src');
+            src = src.replace('###', SITE_URL);
+            image.setAttribute('src', src);
+        });
+
+    }
+
+
+    $(document).ready(function() {
+
+        setImgUrl();
+    });
+
+</script>
 
 @include('admin.layouts.partial.errors')
 

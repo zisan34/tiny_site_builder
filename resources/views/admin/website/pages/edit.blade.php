@@ -30,9 +30,9 @@
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form method="POST" action="{{ route('pages.update',['page'=>$page->id]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('pages.store') }}" enctype="multipart/form-data">
                         @csrf
-                        {{method_field('PUT')}}
+                        <input type="hidden" name="page_id" value="{{$page->id}}">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-9">
@@ -62,7 +62,7 @@
                                         @endphp
                                         <div class="col-md-12" id="page_details_div" 
                                         @if($page->content_type == 2) style="display: none;" @endif>
-                                            <textarea name="page_details" id="summernote">{{ str_replace($rp_string , "", $page->content) }}</textarea>
+                                            <textarea name="details" id="summernote">{{ str_replace($rp_string , "", $page->content) }}</textarea>
                                         </div>
 
                                         <div class="col-md-12" id="file_upload_div"
@@ -84,68 +84,31 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <div class="row text-center">
-                                        <button type="button" class="btn btn-default" onclick="alert('This is still under construction');">Preview</button>
-                                        <button type="button" class="btn btn-default" onclick="alert('This is still under construction');">Save as Draft</button>
-                                        <button type="submit" class="btn btn-success">Update</button>
-                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="page_date">Publish Date :<small style="color:red">*</small></label>
-                                                <input type="text" class="form-control date" id="draft_date" name="page_date" title="Draft Date" required="required" value="{{ date("d-m-Y", strtotime($page->publish_datetime))}}">
-                                            </div>
+                                                <div class="row" style="display: block;">  
+                                                    <div class="col-md-12">
+                                                        <label for="publish_date">Publish Date Time :<small style="color:red;">*</small></label>
+                                                        <label id="publish_date-error" class="error" for="publish_date"></label>
+                                                        <label id="publish_time-error" class="error" for="publish_time"></label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="input-group">
+
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input id="publish_date" name="publish_date" required readonly class="form-control datepicker" value="{{date('d-m-Y', strtoTIme($page->publish_datetime))}}">
+                                                    </div>
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input type="text" class="form-control timepicker" id="publish_time" name="publish_time" value="{{date('h:i A', strtoTIme($page->publish_datetime))}}" required readonly placeholder="time" >
+                                                    </div>
+                                                </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="featured_image">Featured Image :</label>
                                                 <input type="file" id="featured_image" name="featured_image" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="page_visibility">Visibility Type :<small style="color:red">*</small></label>
-                                                <select name="page_visibility" class="form-control">
-                                                    <option value="0" @if($page->visibility == 0) selected @endif >Public</option>
-                                                    <option value="1"  @if($page->visibility == 1) selected @endif >Password Protected</option>
-                                                    <option value="2" @if($page->visibility == 2) selected @endif >Private</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" id="protected_pass_div" @if($page->visibility != 1) style="display: none;" @endif>
-                                            <input type="text" class="form-control" name="protected_pass" placeholder="Enter Password" id="protected_pass" value="{{$page->visibility_pass}}">
-                                        </div>
-                                        {{--                                            <div class="col-md-12">--}}
-                                        {{--                                                <div class="form-group">--}}
-                                        {{--                                                    <label for="draft_date">Publish Date :<small style="color:red">*</small></label>--}}
-                                        {{--                                                    <input type="text" class="form-control date" id="draft_date" name="draft_date" title="Draft Date" required="required" value="26-09-2019">--}}
-                                        {{--                                                </div>--}}
-                                        {{--                                            </div>--}}
-                                        <div class="col-md-12">
-                                            <h4 style="font-weight: 600; border-bottom: 2px solid #222; padding-bottom: 10px; margin-bottom: 10px;">Page Attributes</h4>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="page_parent">Parent :</label>
-                                                <select name="page_parent" class="form-control">
-                                                    <option value="">--Select Parent Page--</option>
-                                                    <option value="0"  @if($page->parent_page_id == 1) selected @endif >Public</option>
-                                                    <option value="1"  @if($page->parent_page_id == 2) selected @endif>Password Protected</option>
-                                                    <option value="2" @if($page->parent_page_id == 3) selected @endif>Private</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="page_template">Template:</label>
-                                                <select name="page_template" class="form-control">
-                                                    <option value="0" 
-                                                    @if($page->template_id == 0) selected @endif >Default Page</option>
-                                                    <option value="1" 
-                                                    @if($page->template_id == 1) selected @endif >Gallery Page</option>
-                                                    <option value="2" 
-                                                    @if($page->template_id == 2) selected @endif >Hero Page</option>
-                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -162,8 +125,6 @@
                         <div class="box-footer">
                             <button type="button" class="btn btn-danger">Cancel</button>
                             <input type="submit" class="btn btn-success pull-right" style="margin-left: 10px;" value="Update">
-                            <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Save as Draft</button>
-                            <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Preview</button>
                         </div>
                         <!-- /.box-footer -->
                     </form>
@@ -185,9 +146,21 @@
     <script>
         $(function() {
 
+            //Timepicker
+            $('.timepicker').timepicker({
+              showInputs: false,
+              interval: 5,
+            });
+
+            //Date picker
+            $('.date, .datepicker').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+            });
+
             $('#summernote').summernote({
                 tabsize: 2,
-                height: 325
+                height: 190
             });
 
             // Initial Focused field
@@ -221,12 +194,6 @@
             //Initialize Select2 Elements
             $('.select2').select2();
 
-            //Date picker
-
-            $('#draft_date').datepicker({
-                autoclose: true,
-                format: 'dd-mm-yyyy'
-            });
         });
 
     </script>

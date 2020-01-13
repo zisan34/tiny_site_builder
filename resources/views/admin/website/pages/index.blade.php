@@ -41,19 +41,17 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>SL#</th>
-                                <th>Title</th>
-                                <th>Creator</th>
-                                <th>Parent Page</th>
-                                <th>Order</th>
-                                <th>Visibility</th>
-                                <th>Action</th>
+                                <th style="width: 30px;">SL#</th>
+                                <th class="text-left">Title</th>
+                                <th style="width: 100px;">Creator</th>
+                                <th style="width: 30px;">Order</th>
+                                <th style="width: 120px;">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($pages as $key => $page)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
+                                <td class="text-center">{{ $key + 1 }}</td>
                                 <td>                                    
                                     @can('edit pages')
                                     <a href="{{ route('pages.edit', $page) }}">
@@ -64,19 +62,7 @@
                                     @endcan
                                 </td>
                                 <td class="text-center">{{ $page->user->name }}</td>
-                                <td>{{ $page->parent_page_id }}</td>
                                 <td class="text-center">{{ $page->order }}</td>
-                                <td class="text-center">
-                                    @if($page->visibility == 1)
-                                    Public
-                                    @elseif($page->visibility == 2)
-                                    Password Protected
-                                    @elseif($page->visibility == 3)
-                                    Private
-                                    @else
-                                    Not defined
-                                    @endif
-                                    </td>
                                 <td class="text-center">
                                     @if($page->content_type == 1)
                                     <a href="#" class="btn btn-xs btn-warning btnView view" data-id="{{$page->id}}"  data-token="{{ csrf_token() }}"><i class="fa fa-eye"></i></a>
@@ -120,7 +106,7 @@
     <!-- /.content -->
     <!-- Modal -->
     <div id="page_view" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">

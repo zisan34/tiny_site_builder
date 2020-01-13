@@ -241,14 +241,9 @@ class PostCategoryController extends Controller
 
         $category->save();
 
-        if(count($category->post_subcategories)>0 )
+        if(count($category->post_subcategories)>0 || count($category->subcategory_posts)>0 || count($category->category_posts)>0 )
         {
-            Toastr::error('Category With sub categories can not be deleted!');
-            return redirect()->back();
-        }
-        else if($category->slug == 'unit-informations')
-        {
-            Toastr::error('This category can not be deleted!');
+            Toastr::error('This Category can not be deleted!');
             return redirect()->back();
         }
 

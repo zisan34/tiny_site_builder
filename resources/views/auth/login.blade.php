@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login | 99 Composite Brigade</title>
+    <title>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : ''}}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style type="text/css">
     body {
-        background: url({{asset('frontend/images/PADMA_BR.png')}}) no-repeat center center fixed !important;
+        background: url({{asset('frontend/images/5b4f15b1ea4aa_thumb900.jpg')}}) no-repeat center center fixed !important;
         -webkit-background-size: cover !important;
         -moz-background-size: cover !important;
         -o-background-size: cover !important;
@@ -48,7 +48,8 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href=""><b>Admin</b> 99CB</a>
+        <a href=""><b>Admin</b> <br> {{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : env('APP_NAME')}}</a>
+        <small>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->subtitle : ''}}</small>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">

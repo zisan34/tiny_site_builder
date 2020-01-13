@@ -158,46 +158,51 @@
                     <form action="{{route('widgets.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="title"> Widget Title:<small style="color:red">*</small> </label>
-                                <input class="form-control" type="text" name="title"/>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="parent_page_ddl"> Display Page :<small style="color:red">*</small> </label>
-                                <select name="parent_page[]" id="parent_page_ddl" class="   form-control select2" multiple style="width: 100%">
-                                    <option selected value="0">All Page</option>
-                                    @foreach($pages as $page)
-                                    <option value="{{$page->id}}"> {{$page->title}} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="type_ddl"> Category :<small style="color:red">*</small> </label>
-                                <select name="type" id="type_ddl" class=" form-control" required>
-                                    <option value="">--Select Category--</option>
-                                    <option value="1">Members</option>
-                                    <option value="2">Multi Links</option>
-                                    <option value="3">Informative</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="order"> Order:<small style="color:red">*</small> </label>
-                                <input class="form-control" required type="number" name="order" value="1" />
-                            </div>
-                            <div class="form-group col-md-4" id="checkbox" style="display: none;">
-                                <div class="checkbox" style="margin-top: 29px;" >
-                                  <label>
-                                    <input name="popup" type="checkbox"> Enable Popup
-                                  </label>
-                                  <label>
-                                    <input name="short_desc" type="checkbox"> Enable Short Description
-                                  </label>
+                            <div class="col-md-12">
+                                <div class="row">                                    
+                                    <div class="form-group col-md-6">
+                                        <label for="title"> Widget Title:<small style="color:red">*</small> </label>
+                                        <input class="form-control" type="text" required name="title"/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="type_ddl"> Category :<small style="color:red">*</small> </label>
+                                        <select name="type" id="type_ddl" class=" form-control" required>
+                                            <option value="">--Select Category--</option>
+                                            <option value="2">Multi Links</option>
+                                            <option value="3">Informative</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row">                                    
+                                    <div class="form-group col-md-6">
+                                        <label for="parent_page_ddl"> Display Page :<small style="color:red">*</small> </label>
+                                        <select name="parent_page[]" id="parent_page_ddl" class="form-control select2" multiple style="width: 100%">
+                                            <option selected value="0">All Page</option>
+                                            @foreach($pages as $page)
+                                            <option value="{{$page->id}}"> {{$page->title}} </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="order"> Order:<small style="color:red">*</small> </label>
+                                        <input class="form-control" required type="number" name="order" value="1" />
+                                    </div>
+                                </div>
+                                {{-- <div class="form-group col-md-4" id="checkbox" style="display: none;">
+                                    <div class="checkbox" style="margin-top: 29px;" >
+                                      <label>
+                                        <input name="popup" type="checkbox"> Enable Popup
+                                      </label>
+                                      <label>
+                                        <input name="short_desc" type="checkbox"> Enable Short Description
+                                      </label>
+                                    </div>
+                                </div> --}}
 
-                            <div class="col-md-12 form-group">
-                                <div class="form-group">
-                                    <input type="submit" class="button_cus_up btn btn-block btn-success pull-left" value="Save">
+                                <div class="col-md-12 form-group">
+                                    <div class="form-group">
+                                        <input type="submit" class="button_cus_up btn btn-block btn-success pull-left" value="Save">
+                                    </div>
                                 </div>
                             </div>
                         </div>

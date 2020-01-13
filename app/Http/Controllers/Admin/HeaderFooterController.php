@@ -40,14 +40,22 @@ class HeaderFooterController extends Controller
     public function store(Request $request)
     {
         //
-        $headerfooter = new HeaderFooter;
+        if($request->headerfooter_id)
+        {
+            $headerfooter = HeaderFooter::find($id);
+            $headerfooter->updated_by = Auth::id();
+        }
+        else
+        {
+            $headerfooter = new HeaderFooter;
+            $headerfooter->created_by = Auth::id();        
+        }
 
         $headerfooter->title = $request->title;
         $headerfooter->subtitle = $request->subtitle;
-        $headerfooter->developer = $request->developer;
-        $headerfooter->credit = $request->credit;
+        $headerfooter->developer = "Fazlul Kabir";
+        $headerfooter->credit = "Fazlul Kabir";
         $headerfooter->welcome_message = $request->welcome_message;
-        $headerfooter->created_by = Auth::id();
         $headerfooter->save();
 
         Toastr::success('Header and Footer Updated Successfully');
@@ -88,21 +96,6 @@ class HeaderFooterController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $headerfooter = HeaderFooter::find($id);
-
-        $headerfooter->title = $request->title;
-        $headerfooter->subtitle = $request->subtitle;
-        $headerfooter->developer = $request->developer;
-        $headerfooter->credit = $request->credit;
-        $headerfooter->welcome_message = $request->welcome_message;
-        $headerfooter->updated_by = Auth::id();
-
-        $headerfooter->save();
-
-        Toastr::success('Header and Footer Updated Successfully');
-
-        
-        return redirect()->route('headerfooters.index');
 
     }
     public function updateMessage(Request $request, $id)

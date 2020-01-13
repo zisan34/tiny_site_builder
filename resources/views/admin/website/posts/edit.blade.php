@@ -52,9 +52,9 @@
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form method="POST" action="{{ route('posts.update',['post'=>$post->id]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         @csrf
-                        {{method_field('PUT')}}
+                        <input type="hidden" name="post_id" value="{{$post->id}}">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-9">
@@ -140,51 +140,29 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="publish_date">Publish Date :<small style="color:red">*</small></label>
-                                                <input type="text" class="form-control date" id="publish_date" name="publish_date" title="Draft Date" required="required" value="{{ date("d-m-Y", strtotime($post->publish_datetime))}}">
+                                                <div class="row" style="display: block;">  
+                                                    <div class="col-md-12">
+                                                        <label for="publish_date">Publish Date Time :<small style="color:red;">*</small></label>
+                                                        <label id="publish_date-error" class="error" for="publish_date"></label>
+                                                        <label id="publish_time-error" class="error" for="publish_time"></label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="input-group">
+
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input id="publish_date" name="publish_date" required readonly class="form-control datepicker" value="{{date('d-m-Y', strtoTIme($post->publish_datetime))}}">
+                                                    </div>
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input type="text" class="form-control timepicker" id="publish_time" name="publish_time" value="{{date('h:i A', strtoTIme($post->publish_datetime))}}" required readonly placeholder="time" >
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="featured_image">Featured Image :</label>
                                                 <input type="file" id="featured_image" name="featured_image" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="post_visibility">Visibility Type :</label>
-                                                <select name="post_visibility" id="post_visibility" class="form-control" required>
-                                                    <option value="0" 
-                                                    @if($post->visibility == 0) selected @endif >Public</option>
-                                                    <option value="1" 
-                                                    @if($post->visibility == 1) selected @endif >Password Protected</option>
-                                                    <option value="2" 
-                                                    @if($post->visibility == 2) selected @endif >Private</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group" id="protected_pass_div" @if($post->visibility != 1) style="display: none;" @endif>
-                                                <input type="text" class="form-control" name="protected_pass" placeholder="Enter Password" id="protected_pass" value="{{$post->visibility_pass}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <h4 style="font-weight: 600; border-bottom: 2px solid #222; padding-bottom: 10px; margin-bottom: 10px;">Page Attributes</h4>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="post_template">Post Template:</label>
-                                                <select name="post_template" id="post_template_ddl"  class="form-control" required>
-                                                    <option value="0" 
-                                                    @if($post->template_id == 0) selected @endif >Default Page</option>
-                                                    <option value="1" 
-                                                    @if($post->template_id == 1) selected @endif >Hero Page</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12" id="subtitle_div" style="display: none;">
-                                            <div class="form-group">
-                                                <label for="subtitle">Subtitle :<small style="color:red">*</small></label>
-                                                <input type="text" class="form-control" id="subtitle_txt" name="subtitle" title="Post Subtitle" value="{{$post->subtitle}}">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -201,8 +179,6 @@
                         <div class="box-footer">
                             <a href="{{route('posts.index')}}" class="btn btn-danger">Cancel</a>
                             <input type="submit" class="btn btn-success pull-right" style="margin-left: 10px;" value="Update">
-                            <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Save as Draft</button>
-                            <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Preview</button>
                         </div>
                         <!-- /.box-footer -->
                     </form>
@@ -233,7 +209,20 @@
 
         $('#summernote').summernote({
             tabsize: 2,
-            height: 325
+            height: 190,
+        });
+
+
+        //Timepicker
+        $('.timepicker').timepicker({
+          showInputs: false,
+          interval: 5,
+        });
+
+        //Date picker
+        $('.date, .datepicker').datepicker({
+            autoclose: true,
+            format: 'dd-mm-yyyy',
         });
 
 
@@ -283,10 +272,6 @@
 
         //Date picker
 
-        $('#draft_date').datepicker({
-            autoclose: true,
-            format: 'dd-mm-yyyy'
-        });
         $(".chosen-select").chosen({
             create_option: true,
             persistent_create_option: true,

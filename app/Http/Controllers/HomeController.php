@@ -9,6 +9,7 @@ use App\PostCategory;
 use App\Widget;
 use App\Album;
 use App\Video;
+use App\WelcomePageSetting;
 use Auth;
 class HomeController extends Controller
 {
@@ -29,18 +30,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $cat_slugs = ['news-and-events', 'publications',  'unit-informations', 'branch-informations'];
 
-        $categories = PostCategory::wherein('slug', $cat_slugs)->orderBy('updated_at', 'desc')->get();
-        $welcome_page = Page::where('slug', '=', 'welcome')->first();
+        $welcome_settings = WelcomePageSetting::latest()->first();
+
+        $cat_ids = explode(',', $welcome_settings->welcome_cats);
+
+        $categories = PostCategory::wherein('id', $cat_ids)->orderBy('updated_at', 'desc')->get();
+
+        $welcome_page = Page::find($welcome_settings->welcome_page_id);
+        
+        if(!$welcome_page)
+            return "Please select at least one Page as Welcome Page";
+
         $widgets = Widget::where('parent_page_id', 'like', '%'.$welcome_page->id.'%')->get();
 
-        $units = PostCategory::where('slug', '=', 'unit-informations')->orderBy('updated_at', 'desc')->latest()->first();
-        return view('welcome', compact('categories', 'welcome_page', 'widgets', 'units'));
+        return view('welcome', compact('welcome_settings', 'categories', 'welcome_page', 'widgets'));
     }
-    public function getPage($id)
+    public function getPage($id,$slug=null)
     {
-        $page = Page::find($id);
+        $page = Page::find(decrypt($id));
         $model = "Page";
         $widgets = Widget::where('parent_page_id', 'like', '%'.$page->id.'%')->get();
         // $widgets = $page->widgets;
@@ -61,16 +69,16 @@ class HomeController extends Controller
         }
         return view('frontend.blog-single',compact('page', 'widgets', 'model'));
     }
-    public function getPostCategory($id)
+    public function getPostCategory($id,$slug=null)
     {
-        $post_category = PostCategory::find($id);
+        $post_category = PostCategory::find(decrypt($id));
         // $widgets = Widget::where('parent_page_id', 'like', '%'.$post_category->id.'%')->get();
         // $widgets = $page->widgets;
         return view('frontend.category',compact('post_category'));
     }
-    public function getPost($id)
+    public function getPost($id,$slug=null)
     {
-        $page = Post::find($id);
+        $page = Post::find(decrypt($id));
         $model = "Post";
         if($page->visibility == 2)
         {
@@ -203,9 +211,9 @@ class HomeController extends Controller
         echo $vals;
         exit();
     }
-    public function getGallery($id)
+    public function getGallery($id,$slug=null)
     {
-        $gallery = Album::find($id);
+        $gallery = Album::find(decrypt($id));
 
         if($gallery->visibility == 2)
         {

@@ -18,7 +18,7 @@
                 <div class="row">
                     @foreach($albums as $album)
                     <div class="col-md-6 col-lg-6">
-                      <a href="{{route('gallery',$album->id)}}" class="blog-entry element-animate fadeIn element-animated" data-animate-effect="fadeIn">
+                      <a href="{{route('gallery',encrypt($album->id))}}" class="blog-entry element-animate fadeIn element-animated" data-animate-effect="fadeIn">
                         <img class="album_thumb" src="{{$album->cover_image ? URL::asset($album->cover_image) : URL::asset($album->image->image)}}" alt="{{$album->title}}">
                         <div class="blog-content-body">
                           <div class="post-meta">

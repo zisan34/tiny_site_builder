@@ -107,11 +107,6 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <div class="row text-center">
-                                        <button type="button" class="btn btn-default" onclick="alert('This is still under construction');">Preview</button>
-                                        <button type="button" class="btn btn-default" onclick="alert('This is still under construction');">Save as Draft</button>
-                                        <button type="submit" class="btn btn-success">Publish</button>
-                                    </div>
                                     <div class="row">
                                         <br>
                                         <div class="col-md-12">
@@ -147,42 +142,26 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="publish_date">Publish Date :<small style="color:red">*</small></label>
-                                                <input type="text" class="form-control date" id="publish_date" name="publish_date" title="Draft Date" required="required" value="{{ date("d-m-Y", strtotime(now()))}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="post_visibility">Visibility Type :<small style="color:red">*</small></label>
-                                                <select name="post_visibility" id="post_visibility" class="form-control" required>
-                                                    <option value="0">Public</option>
-                                                    <option value="1">Password Protected</option>
-                                                    <option value="2">Private</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group" id="protected_pass_div" style="display: none;">
-                                                <input type="text" class="form-control" name="protected_pass" placeholder="Enter Password" id="protected_pass" value="">
+                                                <div class="row" style="display: block;">  
+                                                    <div class="col-md-12">
+                                                        <label for="publish_date">Publish Date Time :<small style="color:red;">*</small></label>
+                                                        <label id="publish_date-error" class="error" for="publish_date"></label>
+                                                        <label id="publish_time-error" class="error" for="publish_time"></label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="input-group">
+
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input id="publish_date" name="publish_date" required readonly class="form-control datepicker" value="{{date('d-m-Y', strtoTIme(now()))}}">
+                                                    </div>
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input type="text" class="form-control timepicker" id="publish_time" name="publish_time" value="{{date('h:i A', strtoTIme(now()))}}" required readonly placeholder="time" >
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
-                                            <h4 style="font-weight: 600; border-bottom: 2px solid #222; padding-bottom: 10px; margin-bottom: 10px;">Page Attributes</h4>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="post_template">Post Template:<small style="color:red">*</small></label>
-                                                <select name="post_template" id="post_template_ddl" class="form-control" required>
-                                                    <option value="0">Default Page</option>
-                                                    <option value="1">Hero Page</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12" id="subtitle_div" style="display: none;">
-                                            <div class="form-group">
-                                                <label for="subtitle">Subtitle :<small style="color:red">*</small></label>
-                                                <input type="text" class="form-control" id="subtitle_txt" name="subtitle" title="Post Subtitle">
-                                            </div>
-                                        </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="post_order">Order :<small style="color:red">*</small></label>
@@ -196,9 +175,7 @@
                         <!-- /.box-body -->
                         <div class="box-footer">
                             <button type="button" class="btn btn-danger">Cancel</button>
-                            <input type="submit" class="btn btn-success pull-right" style="margin-left: 10px;" value="Save">
-                            <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Save as Draft</button>
-                            <button type="submit" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Preview</button>
+                            <input type="submit" class="btn btn-success pull-right" style="margin-left: 10px;" value="Publish">
                         </div>
                         <!-- /.box-footer -->
                     </form>
@@ -221,9 +198,23 @@
     $(function() {
 
 
+        //Timepicker
+        $('.timepicker').timepicker({
+          showInputs: false,
+          interval: 5,
+        });
+
+        //Date picker
+        $('.date, .datepicker').datepicker({
+            autoclose: true,
+            format: 'dd-mm-yyyy',
+        });
+
+
+
         $('.summernote').summernote({
             tabsize: 2,
-            height: 375,
+            height: 190,
             placeholder: 'Post Contents Here'
         });
 
@@ -276,13 +267,6 @@
         //Initialize Select2 Elements
         $('.select2').select2();
 
-        //Date picker
-        $('.date').datepicker({
-            autoclose: true,
-            format: 'dd-mm-yyyy',
-
-
-        });
 
         $(".chosen-select").chosen({
             create_option: true,

@@ -8,7 +8,7 @@
 
     
    
-        <div class="collapse navbar-collapse" id="navbarMenu">
+        <div class="collapse navbar-collapse" id="navbarMenu" style="border-radius: 0% 0% 25% 25%;">
           <ul class="navbar-nav mx-auto"  style="
           @media screen and (max-width: 1024px) {position: -webkit-sticky;  position: sticky;}">
 
@@ -25,13 +25,13 @@
                 <div class="dropdown-menu fade" aria-labelledby="navbarDropdown">
                     @foreach($menu->submenus as $submenu)
                     @if($submenu->relational_type == "pages")
-                    <a class="dropdown-item" href="{{route('page',['id'=>$submenu->relational_id])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('page',['id'=>encrypt($submenu->relational_id), 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "posts")
-                    <a class="dropdown-item" href="{{route('post',['id'=>$submenu->relational_id])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('post',['id'=>encrypt($submenu->relational_id), 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "post_category")
-                    <a class="dropdown-item" href="{{route('post.category',['id'=>$submenu->relational_id])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('post.category',['id'=>encrypt($submenu->relational_id), 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "photo_album")
-                    <a class="dropdown-item" href="{{route('gallery',['id'=>$submenu->relational_id])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('gallery',['id'=>encrypt($submenu->relational_id), 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "photo_gallery")
                     <a class="dropdown-item" href="{{url('/')}}{{$submenu->link}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "video_gallery")

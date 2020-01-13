@@ -41,10 +41,10 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>SL#</th>
+                                <th style="width: 30px;">SL#</th>
                                 <th>Title</th>
-                                <th>order</th>
-                                <th style="width:100px;">Action</th>
+                                <th style="width: 20px;">order</th>
+                                <th style="width:80px;">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -71,10 +71,10 @@
                                                     <table id="example1" class="table table-bordered table-striped">
                                                         <thead>
                                                         <tr>
-                                                            <th>SL#</th>
+                                                            <th style="width: 30px;">SL#</th>
                                                             <th>Title</th>
-                                                            <th>Status</th>
-                                                            <th style="width:100px;">Action</th>
+                                                            <th style="width: 20px;">Status</th>
+                                                            <th style="width:80px;">Action</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>

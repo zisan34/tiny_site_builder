@@ -1,10 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Developed By : Fazlul Kabir(fazlulkabir34@gmail.com) -->
+    <!-- In guidence of : Abdur Rob -->
+    <!-- In collaboration with : Imran Ahmed, Saimun Hossain -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : ''}}</title>
+    <title>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : env('APP_NAME')}}</title>
+    <link rel="shortcut icon" href="{{ asset($LOGOS ? $LOGOS->primary : 'frontend/images/LogoMakr_41Vlo9.png' ) }}" />
 
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400,700|Inconsolata:400,700" rel="stylesheet">
 
@@ -84,6 +88,21 @@
     @stack('js_custom')
     
     <script>
+
+
+        const SITE_URL = "{{url('')}}";
+
+        function setImgUrl(){
+            let images = $('img');
+
+            $.each(images, function(index, image){
+                src = image.getAttribute('src');
+                src = src.replace('###', SITE_URL);
+                image.setAttribute('src', src);
+            });
+
+        }
+
         function getSplitContent (content, word_limit) {
             var contnetWords = "";
             var max_length = (content.length > word_limit) ? word_limit : content.length;
@@ -101,9 +120,25 @@
 
             return contnetWords;
         }
+
+        function setVisitorLog(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            const curent_url = SITE_URL + "{{$_SERVER['REQUEST_URI']}}";
+
+            $.post(SITE_URL + '/vistorlog', {'curent_url' : curent_url});
+        }
+
         $(document).ready(function() {
 
-          var toggleAffix = function(affixElement, scrollElement, wrapper) {
+            setImgUrl();
+
+
+            var toggleAffix = function(affixElement, scrollElement, wrapper) {
             // console.log(affixElement.find('button'));
             if(window.innerWidth >= 1024)
             {
@@ -138,9 +173,17 @@
             // init
             toggleAffix(ele, $(window), wrapper);
           });
-          
+
+
+            var getInfoWords = $('.info').text().split(" ");
+            $('.info').text(getSplitContent(getInfoWords, 70));
+      
+            setImgUrl();
+
+            setVisitorLog();
+
         });
-        
+
     </script>
 
   </body>

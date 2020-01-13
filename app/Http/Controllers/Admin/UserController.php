@@ -13,6 +13,10 @@ use Toastr;
 use Auth;
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:Super Admin']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +37,7 @@ class UserController extends Controller
     public function create()
     {
         //
-        $roles = Role::all();
+        $roles = Role::where('name', '!=', 'Super Admin')->get();
         return view('admin.users.create', compact('roles'));
 
     }

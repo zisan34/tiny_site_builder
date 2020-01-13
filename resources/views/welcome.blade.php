@@ -12,7 +12,7 @@
                         <div class="col-md-12">
                             <div class="m-0 mb-3">
                                 <div class="serv_title text-center">
-                                    <h1>{{$welcome_page->title}}</h1>
+                                    <h1>{{$welcome_page ? $welcome_page->title : env('APP_NAME')}}</h1>
                                 </div>
                             </div>
                         </div>
@@ -27,8 +27,8 @@
                     <div class="notice">
                         <div class="about_us">
                             <div class="main_notice" style="text-align: justify;">
-                               <span id="welcome_content">{!!$welcome_page->content!!}</span>
-                               <a style="color: green;" href="{{route('page',$welcome_page->id)}}" >Read More</a>
+                               <span id="welcome_content">{!!$welcome_page ? $welcome_page->content : ''!!}</span>
+                               <a style="color: #049ba2;" href="{{$welcome_page ? route('page',encrypt($welcome_page->id)) : '#'}}" >Read More</a>
                             </div>
                         </div>
                     </div>
@@ -66,14 +66,14 @@
                                 <div class="serv_icon">
                                 </div>
                                 <div class="serv_title">
-                                    <span><h5>{{$category->title}} <small><a href="{{route('post.category', $category->id)}}" class="text-light pull-right">See All</a></small> </h5></span>
+                                    <span><h5>{{$category->title}} <small><a href="{{route('post.category', encrypt($category->id))}}" class="text-light pull-right">See All</a></small> </h5></span>
                                 </div>
                                 <div class="serv_list">
                                     <ul class="list-group list-group-flush"  style="height: 370px; overflow-y: scroll; width: 100%;">
                                         @php $i=0; @endphp
                                         @foreach($category->limited_post as $post)
                                         <li class="list-group-item list-group-item-action">
-                                            <a target="_blank" href="{{route('post',$post->id)}}">
+                                            <a target="_blank" href="{{route('post',encrypt($post->id))}}">
                                                 @if($i == 0)
                                                 <span style="color: red;">(New)</span>
                                                 @endif<br> <!-- Default 3 days -->
@@ -108,7 +108,7 @@
             <!--service part end-->
 
             <!--spotlight part start-->
-            @if(count($MIDDLE_SLIDERS)>0)
+            @if($welcome_settings->enable_middle_sliders == 1 && count($MIDDLE_SLIDERS)>0)
             <section class="pt-4 pb-4">
               <div class="container-fluid">
                 <div class="row">
@@ -134,7 +134,7 @@
             <section id="full_service" class="pb-5">
                 <div class="container">
                     <div class="row">
-                        @if($LATEST_VIDEO != NULL)
+                        @if($welcome_settings->enable_recent_video == 1 && $LATEST_VIDEO != NULL)
                         <div class="col-md-6">
                             <div class="serv_box">
                                 <div class="serv_icon">
@@ -149,7 +149,7 @@
                         </div>
                         @endif
 
-                        @if(count($LATEST_IMAGES)>0)
+                        @if($welcome_settings->enable_recent_images == 1 && count($LATEST_IMAGES)>0)
 
                         <div class="col-md-6">
                             <div class="serv_box">

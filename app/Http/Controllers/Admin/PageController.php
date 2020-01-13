@@ -9,8 +9,12 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Auth;
 use Session;
 use Toastr;
+
+use App\Traits\B64ImageSaver;
+
 class PageController extends Controller
 {
+    use B64ImageSaver;
     /**
      * Display a listing of the resource.
      *
@@ -43,78 +47,52 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
+
         $this->validate($request,[
             'page_title' => 'required|string',
 
         ]);
-        $publish_date = \Carbon\Carbon::parse($request->page_date);
-        $page = new Page;
-        $page->title             = $request->page_title;
 
-        $slug                    = preg_replace('/\s+/u', '-', trim($request->page_title));
-
-        if(strlen($slug) == strlen(utf8_decode($slug)))
+        if($request->content_type == 1)
         {
-          $slug = strtolower($slug);
+            $this->validate($request, [
+                'details' => 'required'
+            ]);
         }
-        // return $slug;
-        if(count(Page::where('slug', '=', $slug)->get())>0)
+        else
         {
-            $slug .= '-1';
+            $this->validate($request, [
+                'file_upload' => 'required'
+            ]);
         }
-        $page->slug = $slug;
-        $page->parent_page_id    = $request->page_parent;
-        $page->template_id       = $request->page_template;
-        $page->order             = $request->page_order;
-        $page->visibility        = $request->page_visibility;
-        $page->publish_datetime  = $publish_date;
-        $page->created_by        = Auth::id();
 
-        $rp_string = "<?xml encoding='utf-8' ?>";
+        if($request->page_id)
+        {
+            $page = Page::find($request->page_id);
+            $page->updated_by = Auth::id();
+        }
+        else
+        {
+            $page = new Page;
+            $page->created_by = Auth::id();
+        }
+
+        $page->title = $request->page_title;
+
+        $publish_datetime = date('Y-m-d H:i:s', strtotime($request->publish_date . ' ' . $request->publish_time));
+        $page->publish_datetime = $publish_datetime;
+
+        $page->order = $request->page_order;
+
+        $page->content_type = $request->content_type;
+        
         if ($request->content_type == 1) 
         {
             $page_details = $request->details;
-            $dom = new \DomDocument();
 
-            // $dom->loadHtml($rp_string . $page_details);
-            // $page_details =  $dom->saveHTML();
-            // $page->content =  $page_details;
+            $page_details = $this->saveImage('uploads/page/',$request->details);
 
-            $dom->loadHtml( mb_convert_encoding($page_details, 'HTML-ENTITIES', "UTF-8"));
-
-            $images = $dom->getElementsByTagName('img');
-
-
-            foreach($images as $img)
-            {
-                $src = $img->getAttribute('src');
-                
-                // if the img source is 'data-url'
-                if(preg_match('/data:image/', $src)){
-                    
-                    // get the mimetype
-                    preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
-                    $mimetype = $groups['mime'];
-                    
-                    // Generating a random filename
-                    $filename = uniqid();
-                    // $filepath = "/images/$filename.$mimetype";
-                    $filepath = "uploads/page/".$filename . '.' . $mimetype;
-
-        
-                    // @see http://image.intervention.io/api/
-                    $image = Image::make($src)
-                      // resize if required
-                      /* ->resize(300, 200) */
-                      ->encode($mimetype, 100)  // encode file to the specified mimetype
-                      ->save(public_path($filepath));
-                    
-                    $new_src = asset($filepath);
-                    $img->removeAttribute('src');
-                    $img->setAttribute('src', $new_src);
-                } // <!--endif
-            }
-            $page_details =  $dom->saveHTML();
             $page->content =  $page_details;
         }
         else if($request->content_type == 2)
@@ -128,8 +106,6 @@ class PageController extends Controller
                 $page->content = 'files/' . $content_new;
             }
         }
-
-        $page->content_type = $request->content_type;
         
         if ($request->hasFile('featured_image')) 
         {
@@ -138,6 +114,19 @@ class PageController extends Controller
             $image->move('uploads/images', $image_new);
             $page->featured_image = '/uploads/images/' . $image_new;
         }
+
+
+        $slug = preg_replace('/\s+/u', '-', trim($request->page_title));
+
+        if(strlen($slug) == strlen(utf8_decode($slug)))
+        {
+          $slug = strtolower($slug);
+        }
+        // $slug = preg_replace('/\s+/u', '-', trim(strtolower($request->page_title)));
+        
+        if($page->slug != 'welcome')
+            $page->slug = $slug;
+
 
         $page->save();
 
@@ -203,7 +192,7 @@ class PageController extends Controller
 
         $c_page = Page::find($page);
         
-        $c_page->title              = $request->page_title;
+        $c_page->title = $request->page_title;
         if($c_page->slug != 'welcome')
         {
             // $slug = preg_replace('/\s+/u', '-', trim(strtolower($request->page_title)));

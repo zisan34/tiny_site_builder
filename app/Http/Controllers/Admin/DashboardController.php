@@ -11,6 +11,10 @@ use Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+use DB;
+use App\VisitorLog;
+
+
 class DashboardController extends Controller
 {
     /**
@@ -83,7 +87,7 @@ class DashboardController extends Controller
         // }
         // exit();
 
-        // $role = Role::create(['name' => 'Editor']);
+        // $role = Role::czreate(['name' => 'Editor']);
         // $role = Role::where('name', 'Admin')->latest()->first();
         // $role->givePermissionTo($permission);
         // $permissions = Permission::all();
@@ -101,9 +105,15 @@ class DashboardController extends Controller
 
         // $user->syncRoles($roles);
 
+        $visitors_today = DB::table('user_visit_log')->whereDate('created_at', date('Y-m-d'))->count(DB::raw('DISTINCT visitor_ip'));   
+
+        $visitors_this_month = DB::table('user_visit_log')->whereDate('created_at','>=', date('Y-m-01'))->whereDate('created_at','<=', date('Y-m-t'))->count(DB::raw('DISTINCT visitor_ip'));
+        $hits_this_month = VisitorLog::whereDate('created_at', '>=', date('Y-m-01'))->whereDate('created_at', '<=', date('Y-m-t'))->count('visitor_ip');
+        $hits_today = VisitorLog::whereDate('created_at', date('Y-m-d'))->count('visitor_ip');
+
 
         $users = User::where('id', '!=', Auth::id())->get();
-        return view('admin.dashboard', compact('users'));
+        return view('admin.dashboard', compact('users', 'visitors_today', 'visitors_this_month', 'hits_this_month', 'hits_today'));
     }
     public function saveQuote(Request $request)
     {

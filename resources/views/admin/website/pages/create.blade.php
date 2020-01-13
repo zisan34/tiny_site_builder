@@ -80,61 +80,32 @@
                             </div>
 
                             <div class="col-md-3">
-                                <div class="row text-center">
-                                    <button type="button" class="btn btn-default" onclick="alert('This is still under construction');">Preview</button>
-                                    <button type="submit" class="btn btn-success">Publish</button>
-                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="page_date">Publish Date :<small style="color:red">*</small></label>
-                                            <input type="text" class="form-control date" id="draft_date" name="page_date" title="Draft Date" required="required" value="{{ date("d-m-Y", strtotime(now()))}}">
-                                        </div>
+                                            <div class="form-group">
+                                                <div class="row" style="display: block;">  
+                                                    <div class="col-md-12">
+                                                        <label for="publish_date">Publish Date Time :<small style="color:red;">*</small></label>
+                                                        <label id="publish_date-error" class="error" for="publish_date"></label>
+                                                        <label id="publish_time-error" class="error" for="publish_time"></label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="input-group">
+
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input id="publish_date" name="publish_date" required readonly class="form-control datepicker" value="{{date('d-m-Y', strtoTIme(now()))}}">
+                                                    </div>
+                                                    <div class="input-group-addon" style="padding: 0px; border: 0px;">
+                                                        <input type="text" class="form-control timepicker" id="publish_time" name="publish_time" value="{{date('h:i A', strtoTIme(now()))}}" required readonly placeholder="time" >
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="featured_image">Featured Image :</label>
                                             <input type="file" id="featured_image" name="featured_image" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="page_visibility">Visibility Type :<small style="color:red">*</small></label>
-                                            <select name="page_visibility" id="page_visibility" class="form-control" required>
-                                                <option value="0">Public</option>
-                                                <option value="1">Password Protected</option>
-                                                <option value="2">Private</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group" id="protected_pass_div" style="display: none;">
-                                            <input type="text" class="form-control" name="protected_pass" placeholder="Enter Password" id="protected_pass" value="">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <h4 style="font-weight: 600; border-bottom: 2px solid #222; padding-bottom: 10px; margin-bottom: 10px;">Page Attributes</h4>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="page_parent">Parent :</label>
-                                            <select name="page_parent" class="form-control select2">
-                                                <option selected disabled>--Select Parent Page--</option>
-                                                @if(count($pages)>0)
-                                                @foreach($pages as $page)
-                                                <option value="{{$page->id}}">{{$page->title}}</option>
-                                                @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="page_template">Page Template:<small style="color:red">*</small></label>
-                                            <select name="page_template" class="form-control" required>
-                                                <option value="0">Default Page</option>
-                                                <option value="1">Gallery Page</option>
-                                                <option value="2">Hero Page</option>
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -150,7 +121,6 @@
                         <div class="box-footer">
                             <a href="{{route('pages.index')}}" class="btn btn-danger">Cancel</a>
                             <input type="submit" class="btn btn-success pull-right" style="margin-left: 10px;" value="Publish">
-                            <button type="button" class="btn btn-default pull-right" style="margin-left: 10px;" onclick="alert('This is still under construction');">Preview</button>
                         </div>
                         <!-- /.box-footer -->
                     </form>
@@ -168,56 +138,62 @@
 @endpush
 
 @push('js_custom')
-    <script>
-        $(function() {
+<script>
+    $(function() {
 
-            $('#summernote').summernote({
-                tabsize: 2,
-                height: 325
-            });
-
-            // Initial Focused field
-            $('#product_name').focus();
-
-            $(document).on('change', '#page_visibility', function() {
-                var thisValue = $(this).val();
-                // alert(thisValue);
-
-                if ("1" == thisValue) {
-                    $('#protected_pass_div').show();
-                    $('#protected_pass').attr('required', 'required');
-                } else {
-                    $('#protected_pass_div').hide();
-                    $('#protected_pass').removeAttr('required');
-                }
-            });
-
-            $(document).on('change', '#content_type', function() {
-                var thisValue = $(this).val();
-                // alert(thisValue);
-
-                if ("2" == thisValue) {
-                    $('#details_div').hide();
-                    $('#file_upload_div').show();
-                } else {
-                    $('#file_upload_div').hide();
-                    $('#details_div').show();
-                }
-            });
-
-            //Initialize Select2 Elements
-            $('.select2').select2();
-
-            //Date picker
-            $('.date').datepicker({
-                autoclose: true,
-                format: 'dd-mm-yyyy',
-
-
-            });
-
-
+        //Timepicker
+        $('.timepicker').timepicker({
+          showInputs: false,
+          interval: 5,
         });
 
-    </script>
+        //Date picker
+        $('.date, .datepicker').datepicker({
+            autoclose: true,
+            format: 'dd-mm-yyyy',
+        });
+
+
+
+        $('#summernote').summernote({
+            tabsize: 2,
+            height: 190
+        });
+
+        // Initial Focused field
+        $('#product_name').focus();
+
+        $(document).on('change', '#page_visibility', function() {
+            var thisValue = $(this).val();
+            // alert(thisValue);
+
+            if ("1" == thisValue) {
+                $('#protected_pass_div').show();
+                $('#protected_pass').attr('required', 'required');
+            } else {
+                $('#protected_pass_div').hide();
+                $('#protected_pass').removeAttr('required');
+            }
+        });
+
+        $(document).on('change', '#content_type', function() {
+            var thisValue = $(this).val();
+            // alert(thisValue);
+
+            if ("2" == thisValue) {
+                $('#details_div').hide();
+                $('#file_upload_div').show();
+            } else {
+                $('#file_upload_div').hide();
+                $('#details_div').show();
+            }
+        });
+
+        //Initialize Select2 Elements
+        $('.select2').select2();
+
+
+    });
+
+</script>
 @endpush

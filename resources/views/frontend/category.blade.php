@@ -41,7 +41,7 @@
                 }
                 @endphp
                 <div class="post-entry-horzontal">
-                  <a href="{{route('post',$post->id)}}">
+                  <a href="{{route('post',encrypt($post->id),$post->slug)}}">
                     <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url({{URL::asset($post->featured_image ? $post->featured_image : 'uploads/post/Random-image.jpg')}}); background-size: cover;"></div>
                     <span class="text">
                       <div class="post-meta">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2020 at 07:22 PM
+-- Generation Time: Jan 10, 2020 at 07:40 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -72,6 +72,38 @@ CREATE TABLE `album_images` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `title` varchar(200) NOT NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `color` varchar(50) DEFAULT NULL,
+  `status` smallint(2) DEFAULT '1' COMMENT '1=active 0=inactive',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_by` int(11) DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `user_id`, `title`, `start`, `end`, `description`, `color`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
+(22, 1, 'Test Event', '2020-01-05 00:00:00', '2020-01-18 00:00:00', 'Test Purpose', '#8a0060', 1, 1, '2020-01-10 02:17:24', NULL, '2020-01-10 02:47:16', 1, '2020-01-10 02:47:16'),
+(23, 1, 'Up n run TSB', '2020-01-10 00:00:00', '2020-01-11 00:00:00', 'Make the Tiny site builder up and running. Add this to your CV', '#ff0000', 1, 1, '2020-01-10 11:41:21', NULL, '2020-01-10 11:41:21', NULL, NULL),
+(24, 1, 'Test TSB', '2020-01-10 00:00:00', '2020-01-11 00:00:00', NULL, '#c40023', 1, 1, '2020-01-10 22:37:35', NULL, '2020-01-10 22:37:35', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `footers`
 --
 
@@ -132,6 +164,13 @@ CREATE TABLE `header_footers` (
   `deleted_by` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `header_footers`
+--
+
+INSERT INTO `header_footers` (`id`, `title`, `subtitle`, `developer`, `credit`, `welcome_message`, `status`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
+(1, 'Tiny Site Builder', 'TSB', 'Fazlul Kabir', 'Fazlul Kabir', NULL, 1, '2020-01-10 16:46:45', '2020-01-10 16:46:45', NULL, 1, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -166,6 +205,7 @@ CREATE TABLE `menus` (
   `location` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `relational_type` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `relational_id` int(11) DEFAULT NULL,
+  `relational_slug` text COLLATE utf8_unicode_ci,
   `link` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `order` int(11) DEFAULT '1',
   `icon` text COLLATE utf8_unicode_ci,
@@ -177,6 +217,14 @@ CREATE TABLE `menus` (
   `updated_by` int(11) DEFAULT NULL,
   `deleted_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `parent_id`, `level`, `name`, `title_attribute`, `location`, `relational_type`, `relational_id`, `relational_slug`, `link`, `order`, `icon`, `status`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
+(1, NULL, 1, 'Test', 'Test', 'primary_menu', 'pages', 2, NULL, NULL, 1, NULL, 1, '2020-01-10 15:39:38', '2020-01-10 16:25:08', '2020-01-10 16:25:08', 1, 1, 1),
+(2, 1, 2, 'Test dfsd', 'Test dfsd', 'primary_menu', 'pages', 2, NULL, NULL, 1, NULL, 1, '2020-01-10 16:05:27', '2020-01-10 16:25:04', '2020-01-10 16:25:04', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -280,7 +328,8 @@ CREATE TABLE `model_has_roles` (
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\User', 1),
 (10, 'App\\User', 1),
-(11, 'App\\User', 1);
+(11, 'App\\User', 1),
+(12, 'App\\User', 1);
 
 -- --------------------------------------------------------
 
@@ -315,7 +364,8 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `title`, `slug`, `content_type`, `content`, `parent_page_id`, `order`, `template_id`, `featured_image`, `publish_status`, `visibility`, `visibility_pass`, `publish_datetime`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
-(1, 'Welcome', 'welcome', 1, '<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p style=\"text-align: justify; color: rgb(28, 30, 41); background: transparent; margin-top: 0pt; margin-bottom: 0pt;\"><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">I\'m&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Fazlul Kabir</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">. Completed&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">BSC engineering</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">&nbsp;in&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Computer Science and Telecommunication Engineering</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">&nbsp;from&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Noakhali Science and Technology University</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">. I want to be a successful software engineer. I\'m a quick and self-learner, also love to work as a team. I\'m always keen to dig and explore knowledge and learn and adopt new things in this area along with my collaborators and the scholars. I\'m good at web development. I know technologies like&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">HTML, CSS, JavaScript, PHP, AJAX</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">&nbsp;and also some frameworks like&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Laravel, Vuejs, Bootstrap, JQuery</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">. I\'m good at Laravel. I\'ve completed several projects using the Laravel framework. I also completed projects using raw PHP.</span><br></p><p style=\"text-align: justify; color: rgb(28, 30, 41); background: transparent; margin-top: 0pt; margin-bottom: 0pt;\"><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">I completed my&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">SSC</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;from&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Comilla Zilla School, Comilla</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;and&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">HSC</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;from&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Comilla Victoria Govt. College, Comilla</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">. From the early age of my life, I was always in the first row of the executive committee of any program of my Institution. I was involved in CSTE club activities from 1st year and also served as&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">General Secretary</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;of CSTE Club during the 2018-19 period.</span></p><p style=\"text-align: justify; background: transparent; margin-top: 0pt; margin-bottom: 0pt;\"><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\"><font color=\"#1c1e29\">I wan a contest programmer during my university life. I\'ve participated in national level contests as part of a team. Also solved a good number of problems at various online judges. And I am very very interested in learning new technologies.&nbsp;</font><br></span></p></body></html>\n', NULL, 1, 0, NULL, 1, 0, NULL, '2020-01-03 18:00:00', 1, '2020-01-03 18:04:31', NULL, '2020-01-03 18:04:31', NULL, NULL);
+(1, 'Welcome', 'welcome', 1, '<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p style=\"text-align: justify; color: rgb(28, 30, 41); background: transparent; margin-top: 0pt; margin-bottom: 0pt;\"><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">I\'m&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Fazlul Kabir</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">. Completed&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">BSC engineering</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">&nbsp;in&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Computer Science and Telecommunication Engineering</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">&nbsp;from&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Noakhali Science and Technology University</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">. I want to be a successful software engineer. I\'m a quick and self-learner, also love to work as a team. I\'m always keen to dig and explore knowledge and learn and adopt new things in this area along with my collaborators and the scholars. I\'m good at web development. I know technologies like&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">HTML, CSS, JavaScript, PHP, AJAX</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">&nbsp;and also some frameworks like&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Laravel, Vuejs, Bootstrap, JQuery</strong><span data-preserver-spaces=\"true\" style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">. I\'m good at Laravel. I\'ve completed several projects using the Laravel framework. I also completed projects using raw PHP.</span><br></p><p style=\"text-align: justify; color: rgb(28, 30, 41); background: transparent; margin-top: 0pt; margin-bottom: 0pt;\"><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">I completed my&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">SSC</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;from&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Comilla Zilla School, Comilla</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;and&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">HSC</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;from&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">Comilla Victoria Govt. College, Comilla</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">. From the early age of my life, I was always in the first row of the executive committee of any program of my Institution. I was involved in CSTE club activities from 1st year and also served as&nbsp;</span><strong style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\">General Secretary</strong><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\">&nbsp;of CSTE Club during the 2018-19 period.</span></p><p style=\"text-align: justify; background: transparent; margin-top: 0pt; margin-bottom: 0pt;\"><span style=\"background: transparent; margin-top: 0pt; margin-bottom: 0pt;\" data-preserver-spaces=\"true\"><font color=\"#1c1e29\">I wan a contest programmer during my university life. I\'ve participated in national level contests as part of a team. Also solved a good number of problems at various online judges. And I am very very interested in learning new technologies.&nbsp;</font><br></span></p></body></html>\n', NULL, 1, 0, NULL, 1, 0, NULL, '2020-01-03 18:00:00', 1, '2020-01-03 18:04:31', NULL, '2020-01-03 18:04:31', NULL, NULL),
+(2, 'Test fsd sdf', 'test-fsd-sdf', 1, '<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p>dfasdfasdf&nbsp; &nbsp; &nbsp;dfasdf &#2438;&#2488;&#2470;&#2475;&#2494;&#2488;&#2470;&#2475;&#2494;\\</p><p><img data-filename=\"246x0w.jpg\" style=\"width: 246px;\" src=\"http://127.0.0.1:8000/uploads/page/5e1898d404292.jpeg\"><br></p></body></html>\n', NULL, 1, NULL, NULL, 1, 1, NULL, '2020-01-11 14:45:00', 1, '2020-01-10 15:12:35', 1, '2020-01-10 16:25:18', 1, '2020-01-10 16:25:18');
 
 -- --------------------------------------------------------
 
@@ -455,26 +505,17 @@ CREATE TABLE `post_categories` (
   `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `post_sub_categoies`
+-- Dumping data for table `post_categories`
 --
 
-CREATE TABLE `post_sub_categoies` (
-  `id` int(11) NOT NULL,
-  `post_category_id` int(10) UNSIGNED DEFAULT NULL,
-  `title` varchar(221) DEFAULT NULL,
-  `slug` varchar(221) DEFAULT NULL,
-  `description` varchar(221) DEFAULT NULL,
-  `status` tinyint(2) DEFAULT '1' COMMENT '0=inactive 1=active',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `deleted_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `post_categories` (`id`, `title`, `slug`, `parent_id`, `level`, `order`, `description`, `created_by`, `created_at`, `updated_at`, `deleted_at`, `status`, `deleted_by`, `updated_by`) VALUES
+(2, 'Blog', 'blog', NULL, 1, 1, NULL, 1, '2020-01-10 18:01:44', '2020-01-10 18:01:44', NULL, 1, NULL, NULL),
+(3, 'Personal', 'personal', 2, 2, 1, NULL, 1, '2020-01-10 18:02:00', '2020-01-10 18:02:00', NULL, 1, NULL, NULL),
+(4, 'Tech', 'tech', 2, 2, 1, NULL, 1, '2020-01-10 18:03:12', '2020-01-10 18:03:12', NULL, 1, NULL, NULL),
+(5, 'Travel', 'travel', 2, 2, 1, NULL, 1, '2020-01-10 18:03:25', '2020-01-10 18:03:25', NULL, 1, NULL, NULL),
+(6, 'News', 'news', NULL, 1, 1, NULL, 1, '2020-01-10 18:03:39', '2020-01-10 18:03:39', NULL, 1, NULL, NULL),
+(7, 'Field of Interest', 'field-of-interest', NULL, 1, 1, NULL, 1, '2020-01-10 18:03:58', '2020-01-10 18:03:58', NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -490,6 +531,11 @@ CREATE TABLE `profiles` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` datetime DEFAULT NULL,
+  `facebook` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `twitter` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `instagram` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `youtube` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bio` text COLLATE utf8mb4_unicode_ci,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -501,22 +547,22 @@ CREATE TABLE `profiles` (
 -- Dumping data for table `profiles`
 --
 
-INSERT INTO `profiles` (`id`, `user_id`, `address`, `gender`, `image`, `phone`, `dob`, `city`, `country`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(6, 1, NULL, 'Male', '/uploads/profile/1578064568_1_avatar.jpg', NULL, '2019-10-23 00:00:00', NULL, NULL, '2019-10-31 06:59:15', '2020-01-03 15:16:08', NULL),
-(7, 2, NULL, NULL, '/uploads/profile/1572509705_2_commander.jpg', NULL, '2019-10-31 00:00:00', NULL, NULL, '2019-10-31 06:59:18', '2019-10-31 08:15:26', NULL),
-(8, 3, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-11-04 06:27:42', '2019-11-04 06:27:42', NULL),
-(9, 4, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-11-04 06:31:27', '2019-11-04 06:31:27', NULL),
-(10, 5, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-11-04 12:57:46', '2019-11-04 12:57:46', NULL),
-(11, 6, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-11-04 12:58:33', '2019-11-04 12:58:33', NULL),
-(12, 7, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-11-04 12:59:10', '2019-11-04 12:59:10', NULL),
-(13, 8, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-11-04 12:59:50', '2019-11-04 12:59:50', NULL),
-(14, 9, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-11-04 13:00:19', '2019-11-04 13:00:19', NULL),
-(15, 10, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-12-04 10:58:57', '2019-12-04 10:58:57', NULL),
-(16, 11, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-12-05 10:49:27', '2019-12-05 10:49:27', NULL),
-(17, 13, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-12-07 06:49:40', '2019-12-07 06:49:40', NULL),
-(18, 14, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-12-07 06:52:32', '2019-12-07 06:52:32', NULL),
-(19, 15, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-12-07 07:28:24', '2019-12-07 07:28:24', NULL),
-(20, 16, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, NULL, NULL, '2019-12-07 09:16:07', '2019-12-07 09:16:07', NULL);
+INSERT INTO `profiles` (`id`, `user_id`, `address`, `gender`, `image`, `phone`, `dob`, `facebook`, `twitter`, `instagram`, `youtube`, `bio`, `city`, `country`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(6, 1, NULL, 'Male', '/uploads/profile/1578064568_1_avatar.jpg', NULL, '2019-10-23 00:00:00', NULL, NULL, NULL, 'https://www.youtube.com/channel/UCLAUKrwBGvGRi_8nu5io5QA?view_as=subscriber', 'I\'m Fazlul Kabir. Completed BSC engineering in Computer Science and Telecommunication Engineering from Noakhali Science and Technology University. I want to be a successful software engineer. I\'m a quick and self-learner, also love to work as a team. I\'m always keen to dig and explore knowledge and learn and adopt new things in this area along with my collaborators and the scholars. I\'m good at web development. I know technologies like HTML, CSS, JavaScript, PHP, AJAX and also some frameworks like Laravel, Vuejs, Bootstrap, JQuery. I\'m good at Laravel. I\'ve completed several projects using the Laravel framework. I also completed projects using raw PHP.\r\n\r\nI completed my SSC from Comilla Zilla School, Comilla and HSC from Comilla Victoria Govt. College, Comilla. From the early age of my life, I was always in the first row of the executive committee of any program of my Institution. I was involved in CSTE club activities from 1st year and also served as General Secretary of CSTE Club during the 2018-19 period.\r\n\r\nI wan a contest programmer during my university life. I\'ve participated in national level contests as part of a team. Also solved a good number of problems at various online judges. And I am very very interested in learning new technologies.', NULL, NULL, '2019-10-31 06:59:15', '2020-01-09 19:43:07', NULL),
+(7, 2, NULL, NULL, '/uploads/profile/1572509705_2_commander.jpg', NULL, '2019-10-31 00:00:00', '', '', '', '', '', NULL, NULL, '2019-10-31 06:59:18', '2019-10-31 08:15:26', NULL),
+(8, 3, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-11-04 06:27:42', '2019-11-04 06:27:42', NULL),
+(9, 4, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-11-04 06:31:27', '2019-11-04 06:31:27', NULL),
+(10, 5, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-11-04 12:57:46', '2019-11-04 12:57:46', NULL),
+(11, 6, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-11-04 12:58:33', '2019-11-04 12:58:33', NULL),
+(12, 7, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-11-04 12:59:10', '2019-11-04 12:59:10', NULL),
+(13, 8, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-11-04 12:59:50', '2019-11-04 12:59:50', NULL),
+(14, 9, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-11-04 13:00:19', '2019-11-04 13:00:19', NULL),
+(15, 10, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-12-04 10:58:57', '2019-12-04 10:58:57', NULL),
+(16, 11, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-12-05 10:49:27', '2019-12-05 10:49:27', NULL),
+(17, 13, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-12-07 06:49:40', '2019-12-07 06:49:40', NULL),
+(18, 14, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-12-07 06:52:32', '2019-12-07 06:52:32', NULL),
+(19, 15, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-12-07 07:28:24', '2019-12-07 07:28:24', NULL),
+(20, 16, NULL, NULL, 'http://127.0.0.1:8000/uploads/profile/avatar.jpg', NULL, NULL, '', '', '', '', '', NULL, NULL, '2019-12-07 09:16:07', '2019-12-07 09:16:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -535,6 +581,13 @@ CREATE TABLE `quotes` (
   `deleted_by` int(11) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `quotes`
+--
+
+INSERT INTO `quotes` (`id`, `quote`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
+(1, '!!!Welcome To Tiny Site Builder!!!', 1, 1, '2020-01-10 22:39:45', NULL, '2020-01-10 22:39:45', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -557,7 +610,8 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'web', '2019-12-07 05:43:52', '2019-12-07 05:43:52'),
 (10, 'Publisher', 'web', '2020-01-03 17:55:15', '2020-01-03 17:55:15'),
-(11, 'Editor', 'web', '2020-01-03 17:56:31', '2020-01-03 17:56:31');
+(11, 'Editor', 'web', '2020-01-03 17:56:31', '2020-01-03 17:56:31'),
+(12, 'Super Admin', 'web', '2020-01-10 16:34:09', '2020-01-10 16:34:09');
 
 -- --------------------------------------------------------
 
@@ -628,6 +682,17 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (77, 1),
 (80, 1),
 (81, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `site_visit_history`
+--
+
+CREATE TABLE `site_visit_history` (
+  `id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -712,6 +777,15 @@ CREATE TABLE `todos` (
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `todos`
+--
+
+INSERT INTO `todos` (`id`, `task`, `deadline`, `important`, `public`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
+(1, 'ABCdfasdfrwer', '2020-01-10 20:55:00', 0, 0, 0, 1, '2020-01-10 02:55:34', NULL, '2020-01-10 03:05:15', 1, '2020-01-10 03:05:15'),
+(2, 'sdfasdfasdf', '2020-01-09 21:30:00', 0, 0, 0, 1, '2020-01-10 03:00:49', NULL, '2020-01-10 03:05:12', 1, '2020-01-10 03:05:12'),
+(3, 'Complete the site builder within today', '2020-01-10 18:00:00', 0, 0, 0, 1, '2020-01-10 11:39:41', NULL, '2020-01-10 11:40:01', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -753,7 +827,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `rank`, `role_id`, `status`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
-(1, 'Admin', 'admin@app.com', '0000-00-00 00:00:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ZsafFchdkiIrf5GGPt6vpxfGAVE1jzpbids81Ek2ZOxkx6vl8uWBdv35nYhi', NULL, 1, 1, NULL, '2020-01-03 15:16:07', NULL, NULL, 1, NULL),
+(1, 'Admin', 'admin@app.com', '0000-00-00 00:00:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'teHVPNjELzDtespgupajzz20RVGXbWfK4811kOOdaE2Cx0nFeseRh5yakhmF', NULL, 1, 1, NULL, '2020-01-03 15:16:07', NULL, NULL, 1, NULL),
 (2, 'Admin2', 'admin2@app.com', NULL, '$2y$10$xXFz/L1hpnZ60HQ5ZHbwX.lnSsHqeVPvKw2ioK0CsGrJ9NF5Ehwhy', NULL, NULL, 1, 1, '2019-10-31 06:27:47', '2019-11-04 12:56:26', '2019-12-07 06:59:18', 1, NULL, 3),
 (3, 'Md. Tuhin', 'clark@app.com', NULL, '$2y$10$oc.ga6qnUaNBH/i4OXjUtO4Dnpg7zaifoJsKcjTO.F1fmLm2byJ6K', NULL, NULL, 7, 1, '2019-11-04 06:27:42', '2020-01-03 15:22:18', '2020-01-03 15:22:18', 1, NULL, 1),
 (4, 'BM', 'bm@app.com', NULL, '$2y$10$Todf0c.bOIzAKqzyyAMJ7ehEIVY1JqpARXHuaCQ5h7yCWKo8r9jpa', NULL, NULL, 3, 1, '2019-11-04 06:31:27', '2020-01-03 15:22:23', '2020-01-03 15:22:23', 1, NULL, 1),
@@ -856,6 +930,35 @@ CREATE TABLE `videos` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `welcome_page_settings`
+--
+
+CREATE TABLE `welcome_page_settings` (
+  `id` int(11) NOT NULL,
+  `welcome_page_id` int(11) DEFAULT NULL,
+  `welcome_cats` varchar(200) DEFAULT NULL,
+  `enable_middle_sliders` tinyint(1) DEFAULT NULL,
+  `enable_recent_video` tinyint(1) DEFAULT NULL,
+  `enable_recent_images` tinyint(1) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_by` int(11) DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `welcome_page_settings`
+--
+
+INSERT INTO `welcome_page_settings` (`id`, `welcome_page_id`, `welcome_cats`, `enable_middle_sliders`, `enable_recent_video`, `enable_recent_images`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
+(1, 1, '3', 0, 0, 0, 1, '2020-01-11 00:22:21', NULL, '2020-01-11 00:22:21', NULL, NULL),
+(2, 1, '3,5,6', 1, 1, 1, 1, '2020-01-11 00:22:54', NULL, '2020-01-11 00:22:54', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `widgets`
 --
 
@@ -875,6 +978,15 @@ CREATE TABLE `widgets` (
   `deleted_by` int(10) UNSIGNED DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `widgets`
+--
+
+INSERT INTO `widgets` (`id`, `title`, `type`, `popup`, `short_desc`, `parent_page_id`, `order`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
+(1, 'Test Widget', 3, 0, 0, '0', 1, 1, 1, '2020-01-10 05:54:03', NULL, '2020-01-10 16:29:27', 1, '2020-01-10 16:29:27'),
+(2, 'Test Widget 2', 3, 0, 0, '0', 1, 1, 1, '2020-01-10 15:17:52', NULL, '2020-01-10 16:29:23', 1, '2020-01-10 16:29:23'),
+(3, 'Page Link', 2, 0, 0, '0', 1, 1, 1, '2020-01-10 15:54:35', NULL, '2020-01-10 16:29:19', 1, '2020-01-10 16:29:19');
 
 -- --------------------------------------------------------
 
@@ -902,6 +1014,14 @@ CREATE TABLE `widget_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Dumping data for table `widget_data`
+--
+
+INSERT INTO `widget_data` (`id`, `widget_id`, `model`, `model_id`, `link_type`, `link_title`, `link`, `order`, `info_data`, `status`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
+(3, 1, 'Informative', NULL, NULL, NULL, NULL, 1, '<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p><img data-filename=\"colorful-collection-with-great-variety-avatars_23-2147668362.jpg\" style=\"width: 50%;\" src=\"###/uploads/widget_data/5e181882827a8.jpeg\"><br></p></body></html>\n', 1, '2020-01-10 06:24:02', '2020-01-10 16:29:27', '2020-01-10 16:29:27', 1, NULL, 1),
+(4, 2, 'Informative', NULL, NULL, NULL, NULL, 1, '<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p><img data-filename=\"home-bg.jpg\" style=\"width: 50%;\" src=\"http://127.0.0.1:8000/uploads/page/5e1895d40d2fb.jpeg\"><br></p></body></html>\n', 1, '2020-01-10 15:18:44', '2020-01-10 16:29:23', '2020-01-10 16:29:23', 1, NULL, 1);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -915,6 +1035,12 @@ ALTER TABLE `albums`
 -- Indexes for table `album_images`
 --
 ALTER TABLE `album_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -999,12 +1125,6 @@ ALTER TABLE `post_categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `post_sub_categoies`
---
-ALTER TABLE `post_sub_categoies`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `profiles`
 --
 ALTER TABLE `profiles`
@@ -1028,6 +1148,12 @@ ALTER TABLE `roles`
 ALTER TABLE `role_has_permissions`
   ADD PRIMARY KEY (`permission_id`,`role_id`),
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
+
+--
+-- Indexes for table `site_visit_history`
+--
+ALTER TABLE `site_visit_history`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sliders`
@@ -1085,6 +1211,12 @@ ALTER TABLE `videos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `welcome_page_settings`
+--
+ALTER TABLE `welcome_page_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `widgets`
 --
 ALTER TABLE `widgets`
@@ -1113,6 +1245,12 @@ ALTER TABLE `album_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
 -- AUTO_INCREMENT for table `footers`
 --
 ALTER TABLE `footers`
@@ -1128,7 +1266,7 @@ ALTER TABLE `general_settings`
 -- AUTO_INCREMENT for table `header_footers`
 --
 ALTER TABLE `header_footers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `logos`
@@ -1140,7 +1278,7 @@ ALTER TABLE `logos`
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1152,7 +1290,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1164,19 +1302,13 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `post_categories`
 --
 ALTER TABLE `post_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `post_sub_categoies`
---
-ALTER TABLE `post_sub_categoies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `profiles`
@@ -1188,13 +1320,19 @@ ALTER TABLE `profiles`
 -- AUTO_INCREMENT for table `quotes`
 --
 ALTER TABLE `quotes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `site_visit_history`
+--
+ALTER TABLE `site_visit_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sliders`
@@ -1218,7 +1356,7 @@ ALTER TABLE `table_template`
 -- AUTO_INCREMENT for table `todos`
 --
 ALTER TABLE `todos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `todo_user`
@@ -1251,16 +1389,22 @@ ALTER TABLE `videos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `welcome_page_settings`
+--
+ALTER TABLE `welcome_page_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `widgets`
 --
 ALTER TABLE `widgets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `widget_data`
 --
 ALTER TABLE `widget_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

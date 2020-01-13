@@ -46,29 +46,32 @@ tbody tr td img{
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        @if(isset($headerfooter))
-                        <form action="{{route('headerfooters.update',['headerfooters' => $headerfooter->id])}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('headerfooters.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
-                            {{method_field('PUT')}}
+
+                            @if(isset($headerfooter))
+                            <input type="hidden" name="headerfooter_id" value="{{$headerfooter->id}}">
+                            @endif
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="title"> Title: </label>
-                                    <input class="form-control" type="text" name="title" value="{{$headerfooter->title}}" />
+                                    <input class="form-control" type="text" name="title" value="{{$headerfooter ? $headerfooter->title : ''}}" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="subtitle"> Subtitle :</label>
-                                    <input class="form-control" type="text" name="subtitle"  value="{{$headerfooter->subtitle}}"/>
+                                    <input class="form-control" type="text" name="subtitle"  value="{{$headerfooter ? $headerfooter->subtitle : ''}}"/>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="developer"> Developer: </label>
-                                    <input class="form-control" type="text" name="developer" value="{{$headerfooter->developer}}" />
+                                    <input class="form-control" type="text" name="developer" value="{{$headerfooter ? $headerfooter->developer : ''}}" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="credit"> Credit :</label>
-                                    <input class="form-control" type="text" name="credit" value="{{$headerfooter->credit}}"  />
+                                    <input class="form-control" type="text" name="credit" value="{{$headerfooter ? $headerfooter->credit : ''}}"  />
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -77,37 +80,6 @@ tbody tr td img{
                                 </div>
                             </div>
                         </form>
-                        @else
-                        <form action="{{route('headerfooters.store')}}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="title"> Title: </label>
-                                    <input class="form-control" type="text" name="title" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="subtitle"> Subtitle :</label>
-                                    <input class="form-control" type="text" name="subtitle" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="developer"> Developer: </label>
-                                    <input class="form-control" type="text" name="developer" />
-                                    <input type="hidden" name="footer" value="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="credit"> Credit :</label>
-                                    <input class="form-control" type="text" name="credit" />
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <input type="submit" class="button_cus_up btn btn-block btn-success pull-left" value="Save">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        @endif
                     </div>
                     <!-- /.box-body -->
                 </div>

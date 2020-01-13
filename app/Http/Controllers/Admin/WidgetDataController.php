@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Widget;
-use App\Member;
 use App\WidgetData;
 use App\Page;
 use App\Post;
 use Auth;
 use Session;
 use Toastr;
+
+use Intervention\Image\ImageManagerStatic as Image;
+
+use App\Traits\B64ImageSaver;
+
 class WidgetDataController extends Controller
 {
+    use B64ImageSaver;
     /**
      * Display a listing of the resource.
      *
@@ -24,10 +29,9 @@ class WidgetDataController extends Controller
         //
         $widgets = Widget::orderBy('updated_at', 'desc')->get();
         $widget_datas = WidgetData::orderBy('updated_at', 'desc')->get();
-        $members = Member::orderBy('updated_at', 'desc')->get();
         $pages = Page::orderBy('updated_at', 'desc')->get();
         $posts = Post::orderBy('updated_at', 'desc')->get();
-        return view('admin.website.settings.widgets.widget_datas.index', compact('widgets', 'pages', 'posts', 'widget_datas', 'members'));
+        return view('admin.website.settings.widgets.widget_datas.index', compact('widgets', 'pages', 'posts', 'widget_datas'));
     }
 
     /**
@@ -58,29 +62,20 @@ class WidgetDataController extends Controller
         $widget_data->link_type = $request->link_type;
 
         $widget = Widget::find($request->widget);
-        if($widget->type == 1)
+
+        if($widget->type == 3)
         {
-            if($request->member)
-            {
-                $widget_data->model = "Member";
-                $widget_data->model_id = $request->member;
-            }
-            else
-            {
-                Toastr::error('Select Member');
-                return redirect()->back();
-            }
-        }
-        elseif($widget->type == 3)
-        {
+
             if($request->info_data)
             {
                 $widget_data->model = "Informative";
-                $widget_data->info_data = $request->info_data;
+
+                $info_data = $this->saveImage('uploads/page/',$request->info_data);
+
+                $widget_data->info_data =  $info_data;
             }
             else
             {
-                Toastr::error('Select Member');
                 return redirect()->back();
             }
         }
@@ -235,7 +230,7 @@ class WidgetDataController extends Controller
 
         $widget->delete();
 
-        Toastr::error('WidgetData Deleted Successfully');
+        Toastr::error('Widget Data Deleted Successfully');
 
 
         return redirect()->route('widget-data.index');
