@@ -29,14 +29,14 @@
               <div class="row">
                   <div class="col-md-12 p-0">
                       <div class="top_header_content">
-                          <div class="brigade_logo">
+                          <div class="left_logo">
                               <img class="w-100" src="{{ asset($LOGOS ? $LOGOS->primary : 'frontend/images/LogoMakr_7FwHZF.png' ) }}" alt="">
                           </div>
                           <div class="header_txt">
                               <h1>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->title : env('APP_NAME')}}</h1>
                               <h2>{{$HEADER_FOOTERS ? $HEADER_FOOTERS->subtitle : ''}}</h2>
                           </div>
-                          <div class="camp_logo">
+                          <div class="right_logo">
                             @if($LOGOS)
                               <img class="w-100" src="{{ asset($LOGOS->secondary) }}" alt="">
                             @endif
@@ -49,7 +49,7 @@
 
 
 
-      @if(count($TOP_SLIDERS)>0)
+      @if($WelcomePageSetting->enable_top_sliders == 1 && count($TOP_SLIDERS)>0)
       <section class="pt-0 pb-0">
         <div class="container-fluid">
           <div class="row">

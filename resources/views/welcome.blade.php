@@ -4,7 +4,7 @@
 <!--bottom content part start-->
 <div class="container">
     <div class="row">
-        <div class="col-md-9" style="padding: 0;">
+        <div class="col-sm-12 col-lg-9" style="padding-top: 30px;">
             <!--welcome part start-->
             <section id="full_welcome">
                 <div class="container">
@@ -174,7 +174,7 @@
                 </div>
             </section>
         </div>
-        <div class="col-md-3">
+        <div class="col-sm-8 offset-sm-2 offset-lg-0 col-lg-3">
             @include('frontend.partial.sidebar')
         </div>
     </div>

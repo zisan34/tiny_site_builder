@@ -27,7 +27,8 @@ trait B64ImageSaver
 
         foreach($images as $img)
         {
-            $src = $img->getAttribute('src');                
+            $src = $img->getAttribute('src');
+            $style = $img->getAttribute('style');
             // if the img source is 'data-url'
             if(preg_match('/data:image/', $src)){
                 // get the mimetype
@@ -44,12 +45,17 @@ trait B64ImageSaver
                 // @see http://image.intervention.io/api/
                 $image = Image::make($src)
                   // resize if required
-                  /* ->resize(300, 200) */
+                  // ->resize(200, null)
+                ->resize(200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
                   ->encode($mimetype, 100)  // encode file to the specified mimetype
                   ->save(public_path($filepath));
                 $new_src = \URL::asset($this->destination.$filename);
                 $img->removeAttribute('src');
                 $img->setAttribute('src', $new_src);
+                $img->setAttribute('style', "width:100%;");
+
 
             } // <!--endif
         }

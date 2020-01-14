@@ -23,6 +23,7 @@
               <div class="col-md-12">
 
                 @php
+                $categorized_posts = [];
                 if(count($post_category->subcategory_posts)>0)
                   $categorized_posts = $post_category->subcategory_posts;
                 elseif(count($post_category->category_posts)>0)

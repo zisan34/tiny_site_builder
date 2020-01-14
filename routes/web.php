@@ -52,7 +52,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
     Route::get('/profile','ProfileController@index')->name('profile');
     Route::post('/profile/update','ProfileController@update')->name('profile.update');
 
-    Route::post('/drafts/review','DraftController@review')->name('drafts.review');
 
     Route::get('/dashboard/getTodos', 'TodoController@getTodos')->name('dashboard.getTodos');
 
@@ -63,13 +62,10 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
 
 
     Route::resources([
-        'drafts' => 'DraftController',
         'events' => 'EventController',
         'todos' => 'TodoController',
-        'draft_type' => 'DraftTypeController',
         'posts' => 'PostController',
         'categories' => 'PostCategoryController',
-        'subcategories' => 'PostSubCategoryController',
         'pages' => 'PageController',
         'sliders' => 'SliderController',
         'headerfooters' => 'HeaderFooterController',
@@ -80,7 +76,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
         'welcome-settings' => 'WelcomePageSettingController',
         'general-settings' => 'GeneralSettingController',
         'menus' => 'MenuController',
-        'members' => 'MemberController',
         'albums' => 'AlbumController',
         'videos' => 'VideoController',
         'album-images' => 'AlbumImageController',
@@ -100,10 +95,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
     
     Route::post('/todos/toogle', 'TodoController@toogleStatus')->name('todos.toogle');
 
-    Route::post('/drafts/toogle', 'DraftController@toogleStatus')->name('drafts.toogle');
-
-    Route::post('/draft-type/toogle', 'DraftTypeController@toogleStatus')->name('draft_type.toogle');
-
     Route::post('/users/toogle', 'UserController@toogleStatus')->name('users.toogle');
 
     Route::post('/videos/toogle', 'VideoController@toogleStatus')->name('videos.toogle');
@@ -112,11 +103,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
 
     Route::post('/albums/toogle', 'AlbumController@toogleStatus')->name('albums.toogle');
 
-    Route::post('/members/toogle', 'MemberController@toogleStatus')->name('members.toogle');
-
     Route::post('/social_medias/toogle', 'SocialMediaController@toogleStatus')->name('social_medias.toogle');
-
-    Route::post('/member-categories/toogle', 'MemberCategoryController@toogleStatus')->name('member-categories.toogle');
 
     Route::post('/post-categories/toogle', 'PostCategoryController@toogleStatus')->name('post-categories.toogle');
 
@@ -146,18 +133,10 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'namespace'=>'Admin'], fu
 
     Route::post('/pages/view_data','PageController@viewData');
 
-    Route::post('/food-menu/view_data','FoodMenuController@viewData')->name('food-menu.view');
-
-    Route::post('/members/view_data','MemberController@viewData');
-
     Route::post('/widgets/view_data','WidgetController@viewData');
     Route::get('/widgets/x/{id}','WidgetController@x');
 
     Route::post('/posts/view_data','PostController@viewData')->name('posts.view');
-
-    Route::post('/drafts/view_data','DraftController@viewData')->name('drafts.view');
-
-    Route::post('/notes/view_data','NoteController@viewData')->name('notes.view');
 
     Route::post('/categories/view_data','PostCategoryController@viewData');
 

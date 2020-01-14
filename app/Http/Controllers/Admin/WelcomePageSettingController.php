@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use Auth;
+use Toastr;
 
 use App\WelcomePageSetting;
 use App\Page;
@@ -58,12 +59,15 @@ class WelcomePageSettingController extends Controller
         $welcome_settings->welcome_page_id = $request->welcome_page ? $request->welcome_page : Page::latest()->first()->id;
         $welcome_settings->welcome_cats = implode(',', $request->welcome_cats);
         $welcome_settings->enable_middle_sliders = $request->disp_m_sliders ? ($request->disp_m_sliders == 'on' ? 1 : 0) : 0;
+        $welcome_settings->enable_top_sliders = $request->disp_t_sliders ? ($request->disp_t_sliders == 'on' ? 1 : 0) : 0;
         $welcome_settings->enable_recent_images = $request->disp_vdo ? ($request->disp_vdo == 'on' ? 1 : 0) : 0;
         $welcome_settings->enable_recent_video = $request->disp_photo ? ($request->disp_photo == 'on' ? 1 : 0) : 0;
 
         $welcome_settings->created_by = Auth::id();
 
         $welcome_settings->save();
+
+        Toastr::success('Save successful!');
 
         return redirect()->route('welcome-settings.index');
     }

@@ -18,6 +18,7 @@ use App\AlbumImage;
 use App\Video;
 use App\HeaderFooter;
 use App\Quote;
+use App\WelcomePageSetting;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -68,6 +69,8 @@ class AppServiceProvider extends ServiceProvider
         $LOGOS = Logo::latest()->first();
         // GLOBAL default variable init.
 
+        $WelcomePageSetting = WelcomePageSetting::latest()->first();
+
 
         // Share values in all views
         View::share([
@@ -82,7 +85,8 @@ class AppServiceProvider extends ServiceProvider
             'HEADER_FOOTERS'=> $HEADER_FOOTERS,
             'QUOTE'         => $QUOTE,
             'LATEST_IMAGES' => $LATEST_IMAGES,
-            'LATEST_VIDEO' => $LATEST_VIDEO
+            'LATEST_VIDEO' => $LATEST_VIDEO,
+            'WelcomePageSetting' => $WelcomePageSetting,
         ]);
     }
 }

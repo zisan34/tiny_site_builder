@@ -57,7 +57,21 @@ tbody tr td img{
                         <form action="{{route('menus.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="col-md-4" id="menu_from_div">
+                                <div class="col-md-6" style="margin-bottom: 10px;">
+                                    <label for="parent_menu_ddl"> Parent Menu : </label>
+                                    <select name="parent_menu" id="parent_menu_ddl" class="select2 form-control">
+                                        <option value="" selected>--Select Parent Menu--</option>
+                                        
+                                        @foreach($menus as $menu)
+                                        <option value="{{$menu->id}}"> {{$menu->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="navigation_label_txt"> Title :<small style="color:red">*</small></label>
+                                    <input class="form-control" type="text" name="navigation_label" id="navigation_label_txt" required />
+                                </div>
+                                <div class="col-md-6" id="menu_from_div" style="display: none;">
                                     <label for="menu_from_ddl"> Menu From : </label>
                                     <select name="menu_from" id="menu_from_ddl" class="form-control" required>
                                         <option value="">--Select Please--</option>
@@ -70,46 +84,28 @@ tbody tr td img{
                                         <option value="video_gallery">Video Gallery</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4" id="relational_menu_ddl_div">
+                                <div class="col-md-6" id="relational_menu_ddl_div" style="margin-bottom: 10px; display: none;">
                                     <label for="relational_menu_ddl"> Menu :<small style="color:red">*</small></label>
-                                    <select name="relational_menu" id="relational_menu_ddl" class="select2 form-control">
+                                    <select name="relational_menu" id="relational_menu_ddl" class="select2 form-control" style="width: 100%;">
                                         <option value="" selected>Select Menu</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4" id="menu_link_txt_div" style="display: none;">
+                                <div class="col-md-6" id="menu_link_txt_div" style="display: none;">
                                     <label for="menu_link_txt"> Link :<small style="color:red">*</small></label>
                                     <input class="form-control" type="text" name="menu_link" id="menu_link_txt" />
-                                    <input class="form-control" type="text" id="menu_link_view" />
+                                    <input class="form-control" type="text" id="menu_link_view" style="display: none;" />
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="navigation_label_txt"> Navigation Label :<small style="color:red">*</small></label>
-                                    <input class="form-control" type="text" name="navigation_label" id="navigation_label_txt" required />
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="title_attribute_txt"> Title Attribute :<small style="color:red">*</small></label>
-                                    <input class="form-control" type="text" name="title_attribute" id="title_attribute_txt" required />
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="menu_location_ddl"> Menu Location : </label>
                                     <select name="menu_location" id="menu_location_ddl" class="form-control">
                                         <option value="primary_menu" selected>Header Menu (Primary)</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="parent_menu_ddl"> Parent Menu : </label>
-                                    <select name="parent_menu" id="parent_menu_ddl" class="select2 form-control">
-                                        <option value="" selected>--Select Parent Menu--</option>
-                                        
-                                        @foreach($menus as $menu)
-                                        <option value="{{$menu->id}}"> {{$menu->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="menu_order_txt"> Menu Order :<small style="color:red">*</small></label>
                                     <input class="form-control" type="number" name="menu_order" id="menu_order_txt" value="1" />
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="submit" class="button_cus_up btn btn-block btn-success pull-left" value="Save">
                                     </div>
@@ -149,6 +145,15 @@ tbody tr td img{
     // Initial Focused field
     $('#menu_from_ddl').focus();
 
+    $(document).on('change', '#parent_menu_ddl', function(e){
+        let selected = $(this).val();
+
+        if(selected != "")
+        {
+            $("#menu_from_div").show();            
+        }
+    })
+
     $(document).on('change', '#menu_from_ddl', function(e) {
         e.preventDefault();
         var thisValue = $(this).val();
@@ -167,6 +172,7 @@ tbody tr td img{
             
             $('#relational_menu_ddl_div').hide();
             $('#menu_link_txt_div').show();
+            $('#menu_link_view').show();
             $('#menu_link_txt').attr('required', 'required');
             $('#menu_link_txt').attr('readonly', 'readonly');
             $('#menu_link_txt').val("/photo-gallery");
@@ -180,6 +186,7 @@ tbody tr td img{
             $('#menu_link_txt').val();                    
             $('#relational_menu_ddl_div').hide();
             $('#menu_link_txt_div').show();
+            $('#menu_link_view').show();
             $('#menu_link_txt').attr('required', 'required');
             $('#menu_link_txt').attr('readonly', 'readonly');
             $('#menu_link_txt').val("/video-gallery");

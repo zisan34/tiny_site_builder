@@ -47,7 +47,7 @@ tbody tr td img{
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12" style="margin-top: 15px;">
                                             <label for="site_title"> Welcome Page: </label>
 
                                             <select name="welcome_page" id="welcome_page_ddl" class="select2 form-control" required>
@@ -58,7 +58,7 @@ tbody tr td img{
                                             </select>
                                         </div>
                                         
-                                        <div class="col-md-6">
+                                        <div class="col-md-12" style="margin-top: 15px;">
                                             <label for="site_title"> Welcome Page Categories To Display: </label>
                                             @php
                                                 $welcome_cats = $welcome_settings ? explode(',', $welcome_settings->welcome_cats) : [];
@@ -71,22 +71,29 @@ tbody tr td img{
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="disp_m_sliders"> Middle Sliders: </label>
-                                    <input type="checkbox" @if($welcome_settings && $welcome_settings->enable_middle_sliders == 1) checked @endif name="disp_m_sliders" id="disp_m_sliders">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="disp_photo"> Latest Photo: </label>
+                                <div class="col-md-12" style="margin-top: 15px;">
 
-                                    <input type="checkbox" @if($welcome_settings && $welcome_settings->enable_recent_images == 1) checked @endif name="disp_photo" id="disp_photo">
+                                    <div class="col-md-2">
+                                        <label for="disp_m_sliders"> Top Sliders: </label>
+                                        <input type="checkbox" @if($welcome_settings && $welcome_settings->enable_top_sliders == 1) checked @endif name="disp_t_sliders" id="disp_t_sliders">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="disp_m_sliders"> Middle Sliders: </label>
+                                        <input type="checkbox" @if($welcome_settings && $welcome_settings->enable_middle_sliders == 1) checked @endif name="disp_m_sliders" id="disp_m_sliders">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="disp_photo"> Latest Photo: </label>
 
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="disp_vdo"> Latest Video: </label>
-                                    <input type="checkbox" @if($welcome_settings && $welcome_settings->enable_recent_video == 1) checked @endif name="disp_vdo" id="disp_vdo">
+                                        <input type="checkbox" @if($welcome_settings && $welcome_settings->enable_recent_images == 1) checked @endif name="disp_photo" id="disp_photo">
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="disp_vdo"> Latest Video: </label>
+                                        <input type="checkbox" @if($welcome_settings && $welcome_settings->enable_recent_video == 1) checked @endif name="disp_vdo" id="disp_vdo">
+                                    </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <input type="submit" class="button_cus_up btn btn-block btn-success pull-left" value="Save">
                                     </div>
