@@ -70,7 +70,7 @@ class WidgetDataController extends Controller
             {
                 $widget_data->model = "Informative";
 
-                $info_data = $this->saveImage('uploads/page/',$request->info_data);
+                $info_data = $this->saveImage('uploads/widget/',$request->info_data);
 
                 $widget_data->info_data =  $info_data;
             }

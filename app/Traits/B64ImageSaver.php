@@ -38,19 +38,23 @@ trait B64ImageSaver
                 $file_uniqid = uniqid();
                 $filename = $file_uniqid . '.' . $mimetype;
 
-                // $public_path = public_path();
-                // $filepath = str_replace('app_core/public', '', $public_path) . "uploads/drafts/images/".$filename;
+
+                $public_path = public_path();
+                $filepath = str_replace('app_core/public', '', $public_path) . $this->destination .$filename;
                 
-                $filepath = $this->destination.$filename;
+                // $filepath = $this->destination.$filename;
                 // @see http://image.intervention.io/api/
                 $image = Image::make($src)
-                  // resize if required
-                  // ->resize(200, null)
-                ->resize(200, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })
-                  ->encode($mimetype, 100)  // encode file to the specified mimetype
-                  ->save(public_path($filepath));
+                // resize if required
+                // ->resize(200, null)
+                // ->resize(200, null, function ($constraint) {
+                //     $constraint->aspectRatio();
+                // })
+                // ->resizeCanvas(200, null)
+                ->encode($mimetype, 100)  // encode file to the specified mimetype
+                // ->save(public_path($filepath));
+                ->save($filepath);
+
                 $new_src = \URL::asset($this->destination.$filename);
                 $img->removeAttribute('src');
                 $img->setAttribute('src', $new_src);
