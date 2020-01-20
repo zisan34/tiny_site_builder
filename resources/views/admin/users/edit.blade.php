@@ -154,18 +154,12 @@
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-2">
                                             <label>Role: <small style="color:red">*</small></label>
                                         </div>
-                                        <div class="col-sm-8">
-                                            {{-- <select name="role" required class="form-control">
-                                                <option value="">--Select Role--</option>
-                                                @foreach($user_role as $role)
-                                                    <option value="{{$role->id}}">{{$role->name}} @if($role->short_name) ({{$role->short_name}}) @endif</option>
-                                                @endforeach
-                                            </select> --}}
+                                        <div class="col-sm-10">
 
                                             <select class="form-control select2" id="role_select" multiple="" data-placeholder="Select Role" required style="width: 100%;" name="role[]" aria-hidden="true" tabindex="2">
                                                 @foreach($roles as $role)
@@ -174,22 +168,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="col-sm-4">
-                                            <label for="rank" class="text-md-right">{{ __('User Rank') }}:</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input id="rank" type="text" class="form-control @error('rank') is-invalid @enderror" name="rank" value="{{ old('rank', $user->rank) }}" autocomplete="rank" autofocus tabindex="5">
-
-                                            @error('rank')
-                                                <span class="text-danger">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>                                    
                                 </div>
                             </div>
                         </div>

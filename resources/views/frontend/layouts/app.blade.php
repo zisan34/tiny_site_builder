@@ -135,6 +135,13 @@
 
         $(document).ready(function() {
 
+            $(document).on('click', '.clickable', function(e){
+                e.preventDefault();
+                let link = $(this).attr('href');
+                window.location.href = link;
+
+            });
+
             setImgUrl();
 
 

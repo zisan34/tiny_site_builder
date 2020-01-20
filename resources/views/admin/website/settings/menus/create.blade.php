@@ -71,7 +71,7 @@ tbody tr td img{
                                     <label for="navigation_label_txt"> Title :<small style="color:red">*</small></label>
                                     <input class="form-control" type="text" name="navigation_label" id="navigation_label_txt" required />
                                 </div>
-                                <div class="col-md-6" id="menu_from_div" style="display: none;">
+                                <div class="col-md-6" id="menu_from_div">
                                     <label for="menu_from_ddl"> Menu From : </label>
                                     <select name="menu_from" id="menu_from_ddl" class="form-control" required>
                                         <option value="">--Select Please--</option>

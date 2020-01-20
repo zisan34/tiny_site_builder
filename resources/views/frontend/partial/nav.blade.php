@@ -18,7 +18,7 @@
 
             @foreach($MENUS as $menu)
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{{$menu->link}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle @if($menu->link) clickable @endif " href="{{$menu->link}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{$menu->name}}
                 </a>
                 @if(count($menu->submenus) > 0)
