@@ -58,7 +58,7 @@
               <div class="owl-carousel owl-theme home-slider">
               @foreach($TOP_SLIDERS as $slider)
                 <div>
-                  <a href="blog-single.html" class="a-block d-flex align-items-center height-lg w-100 img-fluid" style="background-image: url({{URL::asset($slider->image) }}); ">
+                  <a href="#" class="a-block d-flex align-items-center height-lg w-100 img-fluid" style="background-image: url({{URL::asset($slider->image) }}); ">
                     <div class="text half-to-full">
                       {{-- <span class="category mb-5">Food</span> --}}
                       <div class="post-meta">
