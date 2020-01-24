@@ -103,7 +103,7 @@ class PageController extends Controller
                 $content = $request->file_upload;
                 $content_new = time() . '_' . Auth::id() . '_' . $content->getClientOriginalName();
                 $content->move('uploads/files', $content_new);
-                $page->content = 'files/' . $content_new;
+                $page->content = 'uploads/files/' . $content_new;
             }
         }
         
@@ -266,7 +266,7 @@ class PageController extends Controller
                 $content = $request->file_upload;
                 $content_new = time() . '_' . Auth::id() . '_' . $content->getClientOriginalName();
                 $content->move('uploads/files', $content_new);
-                $c_page->content = 'files/' . $content_new;
+                $c_page->content = 'uploads/files/' . $content_new;
             }
         }
         $c_page->content_type = $request->content_type;

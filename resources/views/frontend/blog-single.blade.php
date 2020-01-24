@@ -1,5 +1,6 @@
 @extends('frontend.layouts.app')
-
+{{-- @php var_dump($page) @endphp --}}
+{{-- @php echo "<pre>"; var_dump($page) @endphp --}}
 @section('content')
     <section class="site-section py-lg">
       <div class="container">
@@ -28,20 +29,23 @@
             @if($page->post_category)
             <a class="category mb-5" href="#">{{$page->post_category->title}}</a>
             @endif
+            @php $original = $page->getOriginal(); @endphp
             <div class="post-content-body">
               @if($page->content_type == 1)
 
-              <p>{!!$page->content!!}</p>
+              {!!$original['content']!!}
+
+
 
               @elseif($page->content_type == 2)
 
-              <iframe src="http://docs.google.com/gview?url={{ URL::asset($page->content) }}&amp;embedded=true" style="width:100%; height:700px;" frameborder="0" ></iframe>
+              <iframe src="http://docs.google.com/gview?url={{ URL::asset($original['content']) }}&amp;embedded=true" style="width:100%; height:700px;" frameborder="0" ></iframe>
 
               <h3 class="text-center">Or</h3>
 
 
 
-              <a class="btn btn-info text-center" href="{{ URL::asset($page->content) }}" download>Download</a>
+              <a class="btn btn-info text-center" href="{{ URL::asset($original['content']) }}" download>Download</a>
 
               <!-- <button class="btn ml-auto">More</button> -->
 
@@ -53,120 +57,37 @@
             <div class="pt-5">
               <p>Category:  <a href="#">{{$page->post_category->title}}</a></p>
             </div>
-            @endif
 
 
-            {{-- <div class="pt-5">
-              <h3 class="mb-5">6 Comments</h3>
-              <ul class="comment-list">
-                <li class="comment">
-                  <div class="vcard">
-                    <img src="{{URL::asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                  </div>
-                  <div class="comment-body">
-                    <h3>Jean Doe</h3>
-                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                    <p><a href="#" class="reply rounded">Reply</a></p>
-                  </div>
-                </li>
-
-                <li class="comment">
-                  <div class="vcard">
-                    <img src="{{URL::asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                  </div>
-                  <div class="comment-body">
-                    <h3>Jean Doe</h3>
-                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                    <p><a href="#" class="reply rounded">Reply</a></p>
-                  </div>
-
-                  <ul class="children">
-                    <li class="comment">
-                      <div class="vcard">
-                        <img src="{{URL::asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                      </div>
-                      <div class="comment-body">
-                        <h3>Jean Doe</h3>
-                        <div class="meta">January 9, 2018 at 2:21pm</div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                        <p><a href="#" class="reply rounded">Reply</a></p>
-                      </div>
+            <div class="pt-5">
+              <h3 class="mb-5">
+                {{-- <a href="{{url()->full()}}#disqus_thread"></a> --}}
+                <a href="{{url()->full()}}#disqus_thread" data-disqus-identifier="{{url()->full()}}">Comments</a>
 
 
-                      <ul class="children">
-                        <li class="comment">
-                          <div class="vcard">
-                            <img src="{{URL::asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                          </div>
-                          <div class="comment-body">
-                            <h3>Jean Doe</h3>
-                            <div class="meta">January 9, 2018 at 2:21pm</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                            <p><a href="#" class="reply rounded">Reply</a></p>
-                          </div>
+              </h3>
+              <div id="disqus_thread"></div>
+              <script>
 
-                            <ul class="children">
-                              <li class="comment">
-                                <div class="vcard">
-                                  <img src="{{URL::asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                  <h3>Jean Doe</h3>
-                                  <div class="meta">January 9, 2018 at 2:21pm</div>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                  <p><a href="#" class="reply rounded">Reply</a></p>
-                                </div>
-                              </li>
-                            </ul>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-
-                <li class="comment">
-                  <div class="vcard">
-                    <img src="{{URL::asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                  </div>
-                  <div class="comment-body">
-                    <h3>Jean Doe</h3>
-                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                    <p><a href="#" class="reply rounded">Reply</a></p>
-                  </div>
-                </li>
-              </ul>
-              <!-- END comment-list -->
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
               
-              <div class="comment-form-wrap pt-5">
-                <h3 class="mb-5">Leave a comment</h3>
-                <form action="#" class="p-5 bg-light">
-                  <div class="form-group">
-                    <label for="name">Name *</label>
-                    <input type="text" class="form-control" id="name">
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" class="form-control" id="email">
-                  </div>
-                  <div class="form-group">
-                    <label for="website">Website</label>
-                    <input type="url" class="form-control" id="website">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <input type="submit" value="Post Comment" class="btn btn-primary">
-                  </div>
-
-                </form>
-              </div>
-            </div> --}}
+              var disqus_config = function () {
+              this.page.url = "{{url()->full()}}";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "{{url()->full()}}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://tinysitebuilder.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+            @endif
 
           </div>
 
@@ -214,7 +135,7 @@
         </div>
         <div class="row">
           @foreach($posts as $post)
-          <div class="col-md-6 col-lg-4">
+          <div class="col-md-6 col-lg-3">
             <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('{{URL::asset($post->featured_image)}}'); ">
               <div class="text">
                 <div class="post-meta">
@@ -233,3 +154,7 @@
     @endif
     <!-- END section -->
 @endsection
+
+@push('js_custom')
+<script id="dsq-count-scr" src="//tinysitebuilder.disqus.com/count.js" async></script>
+@endpush

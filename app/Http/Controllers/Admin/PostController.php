@@ -118,7 +118,7 @@ class PostController extends Controller
                 $content = $request->file_upload;
                 $content_new = time() . '_' . Auth::id() . '_' . $content->getClientOriginalName();
                 $content->move('uploads/files', $content_new);
-                $post->content = 'files/' . $content_new;
+                $post->content = 'uploads/files/' . $content_new;
             }
         }
 

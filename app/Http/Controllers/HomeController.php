@@ -11,6 +11,7 @@ use App\Album;
 use App\Video;
 use App\WelcomePageSetting;
 use Auth;
+use Toastr;
 class HomeController extends Controller
 {
     /**
@@ -48,7 +49,12 @@ class HomeController extends Controller
     }
     public function getPage($id,$slug=null)
     {
-        $page = Page::find(decrypt($id));
+        $page = Page::find($id);
+        if(!$page)
+        {
+            Toastr::error('Invalid Request');
+            return redirect()->back();
+        }
         $model = "Page";
         $widgets = Widget::where('parent_page_id', 'like', '%'.$page->id.'%')->get();
         // $widgets = $page->widgets;
@@ -71,14 +77,14 @@ class HomeController extends Controller
     }
     public function getPostCategory($id,$slug=null)
     {
-        $post_category = PostCategory::find(decrypt($id));
+        $post_category = PostCategory::find($id);
         // $widgets = Widget::where('parent_page_id', 'like', '%'.$post_category->id.'%')->get();
         // $widgets = $page->widgets;
         return view('frontend.category',compact('post_category'));
     }
     public function getPost($id,$slug=null)
     {
-        $page = Post::find(decrypt($id));
+        $page = Post::find($id);
         $model = "Post";
         if($page->visibility == 2)
         {
@@ -213,7 +219,7 @@ class HomeController extends Controller
     }
     public function getGallery($id,$slug=null)
     {
-        $gallery = Album::find(decrypt($id));
+        $gallery = Album::find($id);
 
         if($gallery->visibility == 2)
         {

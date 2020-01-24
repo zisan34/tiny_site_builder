@@ -54,7 +54,7 @@
       <ul class="categories">
         @foreach($categories as $category)
         @if(count($category->category_posts)>0)
-        <li><a href="{{route('post.category',encrypt($category->id),$category->slug)}}">{{$category->title}}<span>({{count($category->category_posts)}})</span></a></li>
+        <li><a href="{{route('post.category',$category->id,$category->slug)}}">{{$category->title}}<span>({{count($category->category_posts)}})</span></a></li>
         @endif
         @endforeach
       </ul>
