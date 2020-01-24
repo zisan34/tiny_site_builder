@@ -7,44 +7,29 @@
 @endpush
 <div class="full_sidebar">
 
+  @php
+    $posts = App\Post::take(4)->get(); 
+  @endphp
+  @if(count($posts)>0)
     <h3 class="heading mt-3">Latest Posts</h3>
     <div class="post-entry-sidebar">
       <ul>
+        @foreach($posts as $post)
         <li>
           <a href="">
-            <img src="{{URL::asset('frontend/images/img_2.jpg')}}" alt="Image placeholder" class="mr-4">
+            <img src="{{URL::asset($post->featured_image ? $post->featured_image : ($LOGOS ? $LOGOS->primary : 'frontend/images/LogoMakr_7FwHZF.png'))}}" style="width: 100px;" alt="{{$post->title}}" class="mr-4">
             <div class="text">
-              <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
+              <h4>{{$post->title}}</h4>
               <div class="post-meta">
-                <span class="mr-2">March 15, 2018 </span>
+                <span class="mr-2">{{date('d-m-Y', strtotime($post->publish_datetime))}}</span>
               </div>
             </div>
           </a>
         </li>
-        <li>
-          <a href="">
-            <img src="{{URL::asset('frontend/images/img_4.jpg')}}" alt="Image placeholder" class="mr-4">
-            <div class="text">
-              <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-              <div class="post-meta">
-                <span class="mr-2">March 15, 2018 </span>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img src="{{URL::asset('frontend/images/img_12.jpg')}}" alt="Image placeholder" class="mr-4">
-            <div class="text">
-              <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-              <div class="post-meta">
-                <span class="mr-2">March 15, 2018 </span>
-              </div>
-            </div>
-          </a>
-        </li>
+        @endforeach
       </ul>
     </div>
+  @endif
     <!-- END sidebar-box -->
     <div class="sidebar-box">
       <h3 class="heading">Categories</h3>

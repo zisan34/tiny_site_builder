@@ -325,7 +325,7 @@ class PageController extends Controller
         //
         $c_page=Page::find($page);
 
-        if($c_page->slug == 'welcome')
+        if($c_page->id == $welcome_settings->welcome_page_id)
         {
             Toastr::error('Welcome Page Can not be Deleted!');
             return redirect()->back();
