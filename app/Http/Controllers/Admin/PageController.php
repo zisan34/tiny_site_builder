@@ -15,6 +15,11 @@ use App\Traits\B64ImageSaver;
 class PageController extends Controller
 {
     use B64ImageSaver;
+    
+    public function __construct()
+    {
+        $this->middleware(['role:Super Admin'], ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

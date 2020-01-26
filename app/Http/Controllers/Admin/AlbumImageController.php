@@ -10,6 +10,10 @@ use Auth;
 use Toastr;
 class AlbumImageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:Super Admin'], ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

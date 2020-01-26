@@ -11,6 +11,10 @@ use Toastr;
 
 class UserAccessController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:Super Admin']);
+    }
     /**
      * Display a listing of the resource.
      *

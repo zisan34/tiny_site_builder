@@ -10,6 +10,10 @@ use App\Events;
 
 class Eventcontroller extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:Super Admin'], ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +28,7 @@ class Eventcontroller extends Controller
             $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
             $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
 
-            $results = Events::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->where('user_id', Auth::id())->get();
+            $results = Events::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->get();
 
             $data = [];
             foreach ($results as $result) {

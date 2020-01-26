@@ -79,10 +79,10 @@
                         <li><span><i class="fab fa fa-angle-right"></i></span> <a target="_blank" href="{{$data->link}}">{!!$data->link_title!!}</a></li>
 
                         @elseif($data->link_type == 2)
-                        <li><span><i class="fab fa fa-angle-right"></i></span> <a target="_blank" href="{{route('post',$data->model_id,$data->post->slug)}}">{{$data->post->title}}</a></li>
+                        <li><span><i class="fab fa fa-angle-right"></i></span> <a target="_blank" href="{{route('post',[$data->model_id,$data->post ? $data->post->slug : ''])}}">{{$data->post->title}}</a></li>
 
                         @elseif($data->link_type == 1)
-                        <li><span><i class="fab fa fa-angle-right"></i></span> <a target="_blank" href="{{route('page',$data->model_id,$data->page->slug)}}">{{$data->page->title}}</a></li>
+                        <li><span><i class="fab fa fa-angle-right"></i></span> <a target="_blank" href="{{route('page',[$data->model_id,$data->page ? $data->page->slug : ''])}}">{{$data->page->title}}</a></li>
                         @endif
                         @endforeach
                     </ul>

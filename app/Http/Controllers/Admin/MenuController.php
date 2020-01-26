@@ -16,6 +16,10 @@ use DB;
 use Toastr;
 class MenuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:Super Admin'], ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

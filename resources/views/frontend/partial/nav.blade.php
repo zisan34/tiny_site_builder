@@ -25,13 +25,13 @@
                 <div class="dropdown-menu fade" aria-labelledby="navbarDropdown">
                     @foreach($menu->submenus as $submenu)
                     @if($submenu->relational_type == "pages")
-                    <a class="dropdown-item" href="{{route('page',['id'=>$submenu->relational_id, 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('page',[$submenu->relational_id, $submenu->slug])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "posts")
-                    <a class="dropdown-item" href="{{route('post',['id'=>$submenu->relational_id, 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('post',[$submenu->relational_id, $submenu->slug])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "post_category")
-                    <a class="dropdown-item" href="{{route('post.category',['id'=>$submenu->relational_id, 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('post.category',[$submenu->relational_id, $submenu->slug])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "photo_album")
-                    <a class="dropdown-item" href="{{route('gallery',['id'=>$submenu->relational_id, 'slug'=>strtolower($submenu->name)])}}">{{$submenu->name}}</a>
+                    <a class="dropdown-item" href="{{route('gallery',[$submenu->relational_id, $submenu->slug])}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "photo_gallery")
                     <a class="dropdown-item" href="{{url('/')}}{{$submenu->link}}">{{$submenu->name}}</a>
                     @elseif($submenu->relational_type == "video_gallery")

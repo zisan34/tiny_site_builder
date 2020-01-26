@@ -11,6 +11,10 @@ use Toastr;
 
 class LogoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:Super Admin'], ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
